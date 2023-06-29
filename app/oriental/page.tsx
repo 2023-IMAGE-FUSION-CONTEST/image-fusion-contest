@@ -1,9 +1,16 @@
 import Image from "next/image";
 import { PrismaClient } from "@prisma/client";
+import Pagination from "@/app/components/Pagination";
 
 const prisma = new PrismaClient();
 
-const Page = async () => {
+interface Params {
+    searchParams: { [key: string]: string | string[] | undefined }
+}
+
+const Page = async ({ searchParams }: Params) => {
+    const page = (searchParams.page && !isNaN(Number(searchParams.page))) ? Number(searchParams.page) : 1;
+
     const data = await prisma.artwork.findMany({
         where: {
             type: "한국화",
@@ -13,12 +20,25 @@ const Page = async () => {
                 }
             }
         },
-        take: 100,
+        // 범위
+        skip: (page - 1) * 50,
+        take: 50,
+    });
+
+    const count = await prisma.artwork.count({
+        where: {
+            type: "한국화",
+            image: {
+                not: {
+                    contains: "art_default2.gif"
+                }
+            }
+        }
     });
 
     return (
         <div className={`px-10 py-8`}>
-            <div className={`columns-5`}>
+            <div className={`lg:columns-5 md:columns-3 columns-1`}>
                 {
                     data.map(async (item) => {
                         return (
@@ -29,6 +49,8 @@ const Page = async () => {
                     })
                 }
             </div>
+
+            <Pagination type={"oriental"} count={count} nowPage={page} />
         </div>
     );
 };
