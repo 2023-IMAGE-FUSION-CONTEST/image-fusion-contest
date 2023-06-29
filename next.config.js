@@ -4,9 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "http",
-                hostname: "artbank.go.kr",
-                port: '',
-                pathname: "/data/**"
+                hostname: "artbank.go.kr"
             }
         ]
     }
