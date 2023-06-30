@@ -17,17 +17,18 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                 fixed
                 top-[2.5%]
                 right-[1%]
-                w-[30%]
+                w-[36rem]
                 h-[95%]
                 bg-white
                 border
-                rounded-2xl
+                rounded-xl
                 shadow-2xl
             `}
         >
             <div
                 className={`
                     w-full
+                    h-full
                     overflow-y-auto
                 `}
             >
@@ -64,14 +65,18 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                         </svg>
                     </div>
                 </div>
-                <div className={`relative w-full h-full`}>
+                <div className={`relative w-full`}>
                     <div className={`relative w-full h-96 bg-[#f1f3f4]`}>
                         <Image src={`http://artbank.go.kr${data.image}`} alt={data.image} fill={true} className={`object-contain`} />
                     </div>
                     <div className={`px-4 py-4`}>
-                        <div className={`text-3xl`}>{ data.title }</div>
-                        <div className={`text-xl`}>{ data.author }</div>
-                        <div>{ data.description }</div>
+                        <div className={`text-3xl mb-1`}>{ data.title }</div>
+                        <div className={`flex flex-row gap-2 font-light text-base mb-4`}>
+                            <div>{ data.author }</div>
+                            { data.year_of_mfg !== "" && <div>{ data.year_of_mfg }</div>}
+                            { data.type !== "" && <div>{ data.type }</div> }
+                        </div>
+                        <div className={`leading-6 tracking-wide`}>{ data.description }</div>
                     </div>
                 </div>
             </div>

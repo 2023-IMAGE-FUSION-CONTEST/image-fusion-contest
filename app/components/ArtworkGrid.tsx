@@ -2,8 +2,9 @@
 
 import Artwork from "@/app/components/Artwork";
 import { ArtworkType } from "@/types/ArtworkType";
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { useSearchParams, usePathname } from "next/navigation";
 const ImageDetail = dynamic(() => import("@/app/components/ImageDetail"));
 
 interface ArtworkGridProps {
@@ -11,6 +12,8 @@ interface ArtworkGridProps {
 }
 
 const ArtworkGrid = ({ data }: ArtworkGridProps) => {
+    const pathName = usePathname();
+    const params = useSearchParams();
     const [selected, setSelected] = useState<ArtworkType>(
         {
             title: "",
@@ -22,6 +25,20 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
             image: ""
         }
     );
+
+    useEffect(() => {
+        setSelected(
+            {
+                title: "",
+                description: "",
+                author: "",
+                type: "",
+                year_of_mfg: "",
+                url: "",
+                image: ""
+            }
+        );
+    }, [pathName, params]);
 
     return (
         <>
