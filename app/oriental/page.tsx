@@ -1,17 +1,16 @@
 import Image from "next/image";
-import { PrismaClient } from "@prisma/client";
-import Pagination from "@/app/components/Pagination";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/utils/prisma";
+import dynamic from "next/dynamic";
+const Pagination = dynamic(() => import("@/app/components/Pagination"), { ssr: false });
 
 interface Params {
     searchParams: { [key: string]: string | string[] | undefined }
 }
 
 const Page = async ({ searchParams }: Params) => {
-    const page = (searchParams.page && !isNaN(Number(searchParams.page))) ? Number(searchParams.page) : 1;
+    const page = (searchParams.page && (!isNaN(Number(searchParams.page)) && Number(searchParams.page) > 0)) ? Number(searchParams.page) : 1;
 
-    const data = await prisma.artwork.findMany({
+    let data = await prisma.artwork.findMany({
         where: {
             type: "한국화",
             image: {
