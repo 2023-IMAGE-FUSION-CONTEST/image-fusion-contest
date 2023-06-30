@@ -1,5 +1,4 @@
 import Link from "next/link";
-import {NextRouter, useRouter} from "next/router";
 
 function Header() {
     const bigBtnOption: string = `px-4 py-1 text-gray-50 text-2xl`
@@ -25,7 +24,7 @@ function Header() {
                 </Link>
             </div>
             <Link
-                href="/todos"
+                href={`/`}
                 className={`${bigBtnOption}
                 rounded-3xl
                 border-4
