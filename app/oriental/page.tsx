@@ -37,6 +37,7 @@ const Page = async ({ searchParams }: Params) => {
 
     return (
         <div className={`px-10 py-8`}>
+            {/* @ts-expect-error */}
             <ArtworkGrid data={data} />
             <Pagination type={"oriental"} count={count} nowPage={page} />
         </div>
