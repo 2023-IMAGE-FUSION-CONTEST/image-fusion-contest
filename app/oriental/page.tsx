@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { prisma } from "@/utils/prisma";
 import dynamic from "next/dynamic";
+import ArtworkGrid from "@/app/components/ArtworkGrid";
 const Pagination = dynamic(() => import("@/app/components/Pagination"), { ssr: false });
 
 interface Params {
@@ -37,57 +37,7 @@ const Page = async ({ searchParams }: Params) => {
 
     return (
         <div className={`px-10 py-8`}>
-            <div className={`lg:columns-5 md:columns-3 columns-1`}>
-                {
-                    data.map(async (item) => {
-                        return (
-                            <div key={item.title} className={`relative inline-block mb-2 group`}>
-                                {/* Background */}
-                                <div
-                                    className={`
-                                        absolute
-                                        bg-black
-                                        w-full
-                                        h-full
-                                        opacity-0
-                                        group-hover:opacity-70
-                                        transform
-                                        duration-300
-                                    `}
-                                />
-
-                                {/* Contents */}
-                                <div
-                                    className={`
-                                        absolute
-                                        w-full
-                                        h-full
-                                        opacity-0
-                                        group-hover:opacity-100
-                                        transform
-                                        duration-300
-                                        text-white
-                                        px-4
-                                        py-4
-                                    `}
-                                >
-                                    <div className={`text-2xl font-bold`}>{ item.title }</div>
-                                    <div className={`text-xl font-medium`}>{ item.author }</div>
-                                </div>
-
-                                {/* Image */}
-                                <Image
-                                    src={`http://artbank.go.kr${item.image}`}
-                                    alt={item.image}
-                                    width={500}
-                                    height={500}
-                                />
-                            </div>
-                        )
-                    })
-                }
-            </div>
-
+            <ArtworkGrid data={data} />
             <Pagination type={"oriental"} count={count} nowPage={page} />
         </div>
     );
