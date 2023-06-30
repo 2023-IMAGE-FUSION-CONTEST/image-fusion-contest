@@ -3,6 +3,7 @@
 import { ArtworkType } from "@/types/ArtworkType";
 import Image from "next/image";
 import Link from "next/link";
+import ImageFusion from "@/app/components/ImageFusion";
 
 interface ImageDetailProps {
     data: ArtworkType,
@@ -77,6 +78,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
                         <div className={`leading-6 tracking-wide`}>{ data.description }</div>
+                        <ImageFusion />
                     </div>
                 </div>
             </div>
