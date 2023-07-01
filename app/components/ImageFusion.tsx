@@ -186,7 +186,7 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
                         </div>
                     </div>
                     <div
-                        className={`flex justify-center items-center p-1 bg-purple-700 text-white w-full h-8 rounded-xl cursor-pointer mt-6`}
+                        className={`flex justify-center items-center p-1 bg-purple-700 text-white w-full h-10 rounded-xl cursor-pointer mt-6`}
                         onClick={handleClick}
                     >
                         생성
