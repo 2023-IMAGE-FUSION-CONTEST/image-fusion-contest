@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect, useRef, useState } from "react";
 import { ArtworkType } from "@/types/ArtworkType";
 import Image from "next/image";
 import Link from "next/link";
 import ImageFusion from "@/app/components/ImageFusion";
+import { getBase64Image } from "@/utils/getBase54Image";
 
 interface ImageDetailProps {
     data: ArtworkType,
@@ -11,6 +13,23 @@ interface ImageDetailProps {
 }
 
 const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
+    const imageRef = useRef<HTMLImageElement>(null);
+    const [baseImage, setBaseImage] = useState<string | null | undefined>(null);
+
+    useEffect(() => {
+        console.log(imageRef.current)
+
+        if (imageRef.current) {
+            imageRef.current.onload = () => {
+                getBase64Image(imageRef.current)
+                    .then(res => {
+                        console.log(res);
+                        setBaseImage(res);
+                    });
+            }
+        }
+    }, [data.image]);
+
     return (
         <div
             className={`
@@ -68,7 +87,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                 </div>
                 <div className={`relative w-full`}>
                     <div className={`relative w-full h-96 bg-[#f1f3f4]`}>
-                        <Image src={`http://artbank.go.kr${data.image}`} alt={data.image} fill={true} className={`object-contain`} />
+                        <Image ref={imageRef} src={`http://artbank.go.kr${data.image}`} alt={data.image} fill={true} className={`object-contain`} />
                     </div>
                     <div className={`px-4 py-4`}>
                         <div className={`text-3xl mb-1`}>{ data.title }</div>
@@ -78,7 +97,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
                         <div className={`leading-6 tracking-wide`}>{ data.description }</div>
-                        <ImageFusion />
+                        <ImageFusion baseImage={baseImage} />
                     </div>
                 </div>
             </div>
