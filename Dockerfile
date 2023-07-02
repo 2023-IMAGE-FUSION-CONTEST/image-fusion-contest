@@ -7,5 +7,5 @@ RUN yarn global add pm2
 RUN yarn install
 
 RUN npx prisma generate
-RUN yarn build
-CMD ["pm2-runtime", "start", "yarn", "--", "start"]
+RUN npm run build
+CMD ["pm2-runtime", "start", "npm", "--", "start"]
