@@ -1,12 +1,14 @@
+import Input from "@/app/components/SearchInput";
+
 export default function DashboardLayout({
                                             children,
                                         }: {
     children: React.ReactNode
 }) {
     return (
-        <section>
-            <div></div>
+        <div>
+            <Input />
             {children}
-        </section>
+        </div>
     )
 }
