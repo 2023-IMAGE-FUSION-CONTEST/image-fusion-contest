@@ -6,6 +6,5 @@ WORKDIR /app
 RUN yarn global add pm2
 RUN yarn install
 
-RUN npx prisma generate
 RUN npm run build
 CMD ["pm2-runtime", "start", "npm", "--", "start"]
