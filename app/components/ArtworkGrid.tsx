@@ -22,7 +22,12 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
             type: "",
             year_of_mfg: "",
             url: "",
-            image: ""
+            image: "",
+            imageSize: {
+                width: 0,
+                height: 0
+            },
+            blurDataURL: ""
         }
     );
 
@@ -35,7 +40,12 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
                 type: "",
                 year_of_mfg: "",
                 url: "",
-                image: ""
+                image: "",
+                imageSize: {
+                    width: 0,
+                    height: 0
+                },
+                blurDataURL: ""
             }
         );
     }, [pathName, params]);

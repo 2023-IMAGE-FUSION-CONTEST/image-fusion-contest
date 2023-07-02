@@ -21,7 +21,6 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
             imageRef.current.onload = () => {
                 getBase64Image(imageRef.current)
                     .then(res => {
-                        console.log(res);
                         setBaseImage(res);
                     });
             }
@@ -73,7 +72,12 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                                     type: "",
                                     year_of_mfg: "",
                                     url: "",
-                                    image: ""
+                                    image: "",
+                                    imageSize: {
+                                        width: 0,
+                                        height: 0
+                                    },
+                                    blurDataURL: ""
                                 }
                             );
                         }}

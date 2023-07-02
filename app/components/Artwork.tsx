@@ -51,8 +51,10 @@ const Artwork = ({ data, setSelected }: ArtworkProps) => {
             <Image
                 src={`http://artbank.go.kr${data.image}`}
                 alt={data.image}
-                width={500}
-                height={500}
+                width={data.imageSize.width}
+                height={data.imageSize.height}
+                placeholder={"blur"}
+                blurDataURL={data.blurDataURL}
             />
         </div>
     );

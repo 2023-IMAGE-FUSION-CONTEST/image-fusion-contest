@@ -1,7 +1,7 @@
 import { prisma } from "@/utils/prisma";
-import dynamic from "next/dynamic";
 import ArtworkGrid from "@/app/components/ArtworkGrid";
-const Pagination = dynamic(() => import("@/app/components/Pagination"), { ssr: false });
+import { getPlaiceholder } from "plaiceholder";
+import Pagination from "@/app/components/Pagination";
 
 interface Params {
     searchParams: { [key: string]: string | string[] | undefined }
@@ -22,7 +22,27 @@ const Page = async ({ searchParams }: Params) => {
         // 범위
         skip: (page - 1) * 50,
         take: 50,
-    });
+    }).then(async (res) => {
+        const response = await Promise.all(
+            res.map(async (item) => {
+                const src = `http://artbank.go.kr${item.image}`;
+
+                const buffer = await fetch(src, { cache: "no-cache" })
+                    .then(async (res) => {
+                        return Buffer.from(await res.arrayBuffer());
+                    });
+
+                const { base64, metadata } = await getPlaiceholder(buffer);
+                return {
+                    ...item,
+                    blurDataURL: base64,
+                    imageSize: { width: metadata.width, height: metadata.height }
+                }
+            })
+        )
+
+        return response;
+    })
 
     const count = await prisma.artwork.count({
         where: {
@@ -39,7 +59,7 @@ const Page = async ({ searchParams }: Params) => {
         <div className={`px-10 py-8`}>
             {/* @ts-ignore */}
             <ArtworkGrid data={data} />
-            <Pagination type={"oriental"} count={count} nowPage={page} />
+            <Pagination type={"oriental"} count={count} />
         </div>
     );
 };

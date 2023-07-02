@@ -1,18 +1,27 @@
 'use client';
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import {useSearchParams} from "next/navigation";
 
 type PaginationType = "oriental" | "western";
 
 interface PaginationProps {
     type: PaginationType,
-    count: number,
-    nowPage: number
+    count: number
 }
 
-const Pagination = async ({ type, count, nowPage }: PaginationProps) => {
+const Pagination = ({ type, count }: PaginationProps) => {
     const [display, setDisplay] = useState<Array<number>>([]);
+    const [nowPage, setNowPage] = useState<number>(1);
+
+    const params = useSearchParams();
+
+    useEffect(() => {
+        const page = params.get("page");
+        setNowPage((page && (!isNaN(Number(page)) && Number(page) > 0)) ? Number(page) : 1);
+    }, [params]);
+
 
     useEffect(() => {
         let temp: number[] = Array.from({ length: 5 }, (_, i) => (i + (Math.floor((nowPage - 1) / 5) * 5)) + 1);
