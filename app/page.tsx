@@ -17,6 +17,8 @@ function ImageLink({ href, src, alt }: ImageLinkProps) {
                 alt={alt}
                 fill={true}
                 className={`object-cover`}
+                placeholder={`blur`}
+                blurDataURL={src}
             />
             <div className={`${commonClasses} bottom-12`}>
                 <p className="text-center text-6xl font-semibold text-white tracking-wide">
