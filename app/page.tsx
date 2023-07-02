@@ -7,7 +7,7 @@ interface ImageLinkProps {
     alt: string;
 }
 
-function ImageLink({href, src, alt}: ImageLinkProps) {
+function ImageLink({ href, src, alt }: ImageLinkProps) {
     const commonClasses = "absolute w-full flex justify-center";
 
     return (
@@ -19,8 +19,8 @@ function ImageLink({href, src, alt}: ImageLinkProps) {
                 className={`object-cover`}
             />
             <div className={`${commonClasses} bottom-12`}>
-                <p className="text-center break-words text-4xl w-7/12">
-                    AAAAAAAAAAAAAAAAAAAAAA
+                <p className="text-center text-6xl font-semibold text-white tracking-wide">
+                    { alt }
                 </p>
             </div>
         </Link>
