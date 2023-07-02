@@ -9,7 +9,7 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: "http",
+                protocol: "https",
                 hostname: "artbank.go.kr"
             },
             {

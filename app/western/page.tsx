@@ -1,7 +1,6 @@
-import { prisma } from "@/utils/prisma";
-import dynamic from "next/dynamic";
 import ArtworkGrid from "@/app/components/ArtworkGrid";
-const Pagination = dynamic(() => import("@/app/components/Pagination"), { ssr: false });
+import { getArtworkCount, getArtworks, preload } from "@/utils/getArtworks";
+import Pagination from "@/app/components/Pagination";
 
 interface Params {
     searchParams: { [key: string]: string | string[] | undefined }
@@ -9,37 +8,16 @@ interface Params {
 
 const Page = async ({ searchParams }: Params) => {
     const page = (searchParams.page && (!isNaN(Number(searchParams.page)) && Number(searchParams.page) > 0)) ? Number(searchParams.page) : 1;
+    preload(page, "western");
 
-    let data = await prisma.artwork.findMany({
-        where: {
-            type: "서양화",
-            image: {
-                not: {
-                    contains: "art_default2.gif"
-                }
-            }
-        },
-        // 범위
-        skip: (page - 1) * 50,
-        take: 50,
-    });
-
-    const count = await prisma.artwork.count({
-        where: {
-            type: "서양화",
-            image: {
-                not: {
-                    contains: "art_default2.gif"
-                }
-            }
-        }
-    });
+    const data = await getArtworks(page, "western");
+    const count = await getArtworkCount("western");
 
     return (
         <div className={`px-10 py-8`}>
             {/* @ts-ignore */}
             <ArtworkGrid data={data} />
-            <Pagination type={"western"} count={count} nowPage={page} />
+            <Pagination type={"western"} count={count} />
         </div>
     );
 };
