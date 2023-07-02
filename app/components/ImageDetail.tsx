@@ -17,8 +17,6 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
     const [baseImage, setBaseImage] = useState<string | null | undefined>(null);
 
     useEffect(() => {
-        console.log(imageRef.current)
-
         if (imageRef.current) {
             imageRef.current.onload = () => {
                 getBase64Image(imageRef.current)
@@ -97,7 +95,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
                         <div className={`leading-6 tracking-wide`}>{ data.description }</div>
-                        <ImageFusion baseImage={baseImage} />
+                        <ImageFusion baseImage={baseImage} imageUrl={`http://artbank.go.kr${data.image}`} />
                     </div>
                 </div>
             </div>
