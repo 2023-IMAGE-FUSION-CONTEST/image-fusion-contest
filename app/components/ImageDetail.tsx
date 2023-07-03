@@ -21,7 +21,6 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
             imageRef.current.onload = () => {
                 getBase64Image(imageRef.current)
                     .then(res => {
-                        console.log(res);
                         setBaseImage(res);
                     });
             }
@@ -67,13 +66,19 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                         onClick={() => {
                             setSelected(
                                 {
+                                    id: 0,
                                     title: "",
                                     description: "",
                                     author: "",
                                     type: "",
                                     year_of_mfg: "",
                                     url: "",
-                                    image: ""
+                                    image: "",
+                                    imageSize: {
+                                        width: 0,
+                                        height: 0
+                                    },
+                                    blurDataURL: ""
                                 }
                             );
                         }}
@@ -85,7 +90,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                 </div>
                 <div className={`relative w-full`}>
                     <div className={`relative w-full h-96 bg-[#f1f3f4]`}>
-                        <Image ref={imageRef} src={`http://artbank.go.kr${data.image}`} alt={data.image} fill={true} className={`object-contain`} />
+                        <Image ref={imageRef} src={`https://artbank.go.kr${data.image}`} alt={data.image} fill={true} className={`object-contain`} />
                     </div>
                     <div className={`px-4 py-4`}>
                         <div className={`text-3xl mb-1`}>{ data.title }</div>
@@ -95,7 +100,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
                         <div className={`leading-6 tracking-wide`}>{ data.description }</div>
-                        <ImageFusion baseImage={baseImage} imageUrl={`http://artbank.go.kr${data.image}`} />
+                        <ImageFusion baseImage={baseImage} imageUrl={`https://artbank.go.kr${data.image}`} />
                     </div>
                 </div>
             </div>

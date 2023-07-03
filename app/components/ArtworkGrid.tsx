@@ -16,26 +16,38 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
     const params = useSearchParams();
     const [selected, setSelected] = useState<ArtworkType>(
         {
+            id: 0,
             title: "",
             description: "",
             author: "",
             type: "",
             year_of_mfg: "",
             url: "",
-            image: ""
+            image: "",
+            imageSize: {
+                width: 0,
+                height: 0
+            },
+            blurDataURL: ""
         }
     );
 
     useEffect(() => {
         setSelected(
             {
+                id: 0,
                 title: "",
                 description: "",
                 author: "",
                 type: "",
                 year_of_mfg: "",
                 url: "",
-                image: ""
+                image: "",
+                imageSize: {
+                    width: 0,
+                    height: 0
+                },
+                blurDataURL: ""
             }
         );
     }, [pathName, params]);
@@ -46,7 +58,7 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
                 {
                     data.map((item) => {
                         return (
-                            <Artwork key={item.title} data={item} setSelected={setSelected} />
+                            <Artwork key={item.id} data={item} setSelected={setSelected} />
                         )
                     })
                 }

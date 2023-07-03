@@ -1,17 +1,19 @@
 'use client';
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
 type PaginationType = "oriental" | "western";
 
 interface PaginationProps {
     type: PaginationType,
-    count: number,
-    nowPage: number
+    count: number
 }
 
-const Pagination = async ({ type, count, nowPage }: PaginationProps) => {
+const Pagination = ({ type, count }: PaginationProps) => {
+    const params = useParams();
+    const nowPage = (params.slug && (!isNaN(Number(params.slug)) && Number(params.slug) > 0)) ? Number(params.slug) : 1;
     const [display, setDisplay] = useState<Array<number>>([]);
 
     useEffect(() => {
@@ -22,7 +24,7 @@ const Pagination = async ({ type, count, nowPage }: PaginationProps) => {
 
     return (
         <div className={`w-full flex justify-center items-center my-10 text-xl`}>
-            <Link href={`/${type}?page=1`}>
+            <Link href={`/gallery/${type}?page=1`}>
                 <div
                     className={`
                         p-2
@@ -44,7 +46,7 @@ const Pagination = async ({ type, count, nowPage }: PaginationProps) => {
 
             {
                 nowPage !== 1 &&
-                <Link href={`/${type}?page=${nowPage - 1}`}>
+                <Link href={`/gallery/${type}?page=${nowPage - 1}`}>
                     <div
                         className={`
                             p-2
@@ -66,7 +68,7 @@ const Pagination = async ({ type, count, nowPage }: PaginationProps) => {
             {
                 display.map((item) => {
                     return (
-                        <Link key={item.toString()} href={`/${type}?page=${item}`}>
+                        <Link key={item.toString()} href={`/gallery/${type}?page=${item}`}>
                             <div
                                 className={`
                                     w-[2.625rem]
@@ -94,7 +96,7 @@ const Pagination = async ({ type, count, nowPage }: PaginationProps) => {
 
             {
                 nowPage !== Math.ceil(count / 50) &&
-                <Link href={`/${type}?page=${nowPage + 1}`}>
+                <Link href={`/gallery/${type}?page=${nowPage + 1}`}>
                     <div
                         className={`
                             p-2
@@ -113,7 +115,7 @@ const Pagination = async ({ type, count, nowPage }: PaginationProps) => {
                 </Link>
             }
 
-            <Link href={`/${type}?page=${Math.ceil(count / 50)}`}>
+            <Link href={`/gallery/${type}?page=${Math.ceil(count / 50)}`}>
                 <div
                     className={`
                         p-2
