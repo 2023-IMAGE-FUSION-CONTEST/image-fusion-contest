@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {useSearchParams} from "next/navigation";
+import { useParams } from "next/navigation";
 
 type PaginationType = "oriental" | "western";
 
@@ -12,16 +12,9 @@ interface PaginationProps {
 }
 
 const Pagination = ({ type, count }: PaginationProps) => {
+    const params = useParams();
+    const nowPage = (params.slug && (!isNaN(Number(params.slug)) && Number(params.slug) > 0)) ? Number(params.slug) : 1;
     const [display, setDisplay] = useState<Array<number>>([]);
-    const [nowPage, setNowPage] = useState<number>(1);
-
-    const params = useSearchParams();
-
-    useEffect(() => {
-        const page = params.get("page");
-        setNowPage((page && (!isNaN(Number(page)) && Number(page) > 0)) ? Number(page) : 1);
-    }, [params]);
-
 
     useEffect(() => {
         let temp: number[] = Array.from({ length: 5 }, (_, i) => (i + (Math.floor((nowPage - 1) / 5) * 5)) + 1);
@@ -31,7 +24,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
 
     return (
         <div className={`w-full flex justify-center items-center my-10 text-xl`}>
-            <Link href={`/${type}?page=1`}>
+            <Link href={`/gallery/${type}?page=1`}>
                 <div
                     className={`
                         p-2
@@ -53,7 +46,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
 
             {
                 nowPage !== 1 &&
-                <Link href={`/${type}?page=${nowPage - 1}`}>
+                <Link href={`/gallery/${type}?page=${nowPage - 1}`}>
                     <div
                         className={`
                             p-2
@@ -75,7 +68,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
             {
                 display.map((item) => {
                     return (
-                        <Link key={item.toString()} href={`/${type}?page=${item}`}>
+                        <Link key={item.toString()} href={`/gallery/${type}?page=${item}`}>
                             <div
                                 className={`
                                     w-[2.625rem]
@@ -103,7 +96,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
 
             {
                 nowPage !== Math.ceil(count / 50) &&
-                <Link href={`/${type}?page=${nowPage + 1}`}>
+                <Link href={`/gallery/${type}?page=${nowPage + 1}`}>
                     <div
                         className={`
                             p-2
@@ -122,7 +115,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
                 </Link>
             }
 
-            <Link href={`/${type}?page=${Math.ceil(count / 50)}`}>
+            <Link href={`/gallery/${type}?page=${Math.ceil(count / 50)}`}>
                 <div
                     className={`
                         p-2
