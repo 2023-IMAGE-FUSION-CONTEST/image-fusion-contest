@@ -16,6 +16,7 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
     const params = useSearchParams();
     const [selected, setSelected] = useState<ArtworkType>(
         {
+            id: 0,
             title: "",
             description: "",
             author: "",
@@ -34,6 +35,7 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
     useEffect(() => {
         setSelected(
             {
+                id: 0,
                 title: "",
                 description: "",
                 author: "",
@@ -56,7 +58,7 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
                 {
                     data.map((item) => {
                         return (
-                            <Artwork key={item.title} data={item} setSelected={setSelected} />
+                            <Artwork key={item.id} data={item} setSelected={setSelected} />
                         )
                     })
                 }
