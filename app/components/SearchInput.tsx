@@ -75,15 +75,6 @@ export default function Input() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onEnterPress}
             />
-            <div className="flex flex-wrap w-7/12">
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-            </div>
         </div>
     );
 }
