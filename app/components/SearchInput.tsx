@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Anton } from 'next/font/google';
 import {useEffect, useState} from "react";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 
 const anton = Anton({
     weight: ['400'],
@@ -48,10 +48,26 @@ function Title() {
 }
 
 export default function Input() {
+    const [input, setInput] = useState('');
+    const pathname: string = usePathname();
+    const router = useRouter();
+
+    const onEnterPress = (e: any) => {
+        if(e.keyCode == 13 && e.shiftKey == false) {
+            e.preventDefault();
+            router.push(`/api/search/${input}?q=${pathname}`);
+        }
+    }
+
     return (
         <div className="w-full mt-36 flex flex-col items-center">
             <Title />
-            <input className="pr-8 pl-3 py-2 bg-gray-800 text-white placeholder-gray-500 w-7/12 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 mb-5" placeholder="검색를 입력해 주세요." />
+            <input
+                className="pr-8 pl-3 py-2 bg-gray-800 text-white placeholder-gray-500 w-7/12 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 mb-5"
+                placeholder="검색를 입력해 주세요."
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={onEnterPress}
+            />
             <div className="flex">
                 <Tag/>
                 <Tag/>
