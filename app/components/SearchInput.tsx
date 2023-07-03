@@ -49,13 +49,17 @@ function Title() {
 
 export default function Input() {
     const [input, setInput] = useState('');
-    const pathname: string = usePathname();
+    const [pathname]: string[] = usePathname().split('/').slice(-1);
     const router = useRouter();
 
+
     const onEnterPress = (e: any) => {
-        if(e.keyCode == 13 && e.shiftKey == false) {
+        if (e.target.value === '') return;
+
+        if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
-            router.push(`/api/search/${input}?q=${pathname}`);
+            router.push(`/gallery/${pathname}/${input}?q=${input}`);
+            e.target.value = '';
         }
     }
 
