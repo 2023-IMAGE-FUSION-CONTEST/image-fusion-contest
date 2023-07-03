@@ -1,4 +1,5 @@
 export interface ArtworkType {
+    id: number,
     title: string,
     description: string,
     year_of_mfg: string,

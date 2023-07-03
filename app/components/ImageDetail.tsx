@@ -66,6 +66,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                         onClick={() => {
                             setSelected(
                                 {
+                                    id: 0,
                                     title: "",
                                     description: "",
                                     author: "",
