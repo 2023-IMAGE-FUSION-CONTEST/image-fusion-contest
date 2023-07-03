@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Anton } from 'next/font/google';
 import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
+import {set} from "zod";
 
 const anton = Anton({
     weight: ['400'],
@@ -58,7 +59,9 @@ export default function Input() {
 
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
-            router.push(`/gallery/${pathname}/${input}?q=${input}`);
+            const encodedString = encodeURIComponent(e.target.value);
+            router.push(`/gallery/oriental?q=${encodedString}`);
+            setInput('');
             e.target.value = '';
         }
     }
@@ -72,7 +75,7 @@ export default function Input() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onEnterPress}
             />
-            <div className="flex">
+            <div className="flex flex-wrap w-7/12">
                 <Tag/>
                 <Tag/>
                 <Tag/>

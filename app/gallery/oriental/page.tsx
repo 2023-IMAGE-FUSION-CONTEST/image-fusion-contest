@@ -36,8 +36,9 @@ const Page = async ({ searchParams }: Params) => {
     });
 
     return (
-        <div className={`px-10 py-8`}>
+        <div className={`px-10 py-8 text-white`}>
             {/* @ts-ignore */}
+            {searchParams.q}
             <ArtworkGrid data={data} />
             <Pagination type={"oriental"} count={count} nowPage={page} />
         </div>
