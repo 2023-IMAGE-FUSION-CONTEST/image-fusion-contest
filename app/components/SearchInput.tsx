@@ -60,7 +60,7 @@ export default function Input() {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
             const encodedString = encodeURIComponent(e.target.value);
-            router.push(`/gallery/oriental?q=${encodedString}`);
+            router.push(`/gallery/oriental/search/${encodedString}`);
             setInput('');
             e.target.value = '';
         }

@@ -14,7 +14,7 @@ export const generateStaticParams = async () => {
 }
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-    console.log(params.slug);
+    
     const page = (params.slug && (!isNaN(Number(params.slug)) && Number(params.slug) > 0)) ? Number(params.slug) : 1;
     const data = await getArtworks(page, "oriental");
     const count = await getArtworkCount("oriental");
