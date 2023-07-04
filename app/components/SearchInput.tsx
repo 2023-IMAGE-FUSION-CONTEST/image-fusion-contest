@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Anton } from 'next/font/google';
 import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
-import {set} from "zod";
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
 const anton = Anton({
     weight: ['400'],

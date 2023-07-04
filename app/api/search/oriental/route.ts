@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function GET( request: Request ) {
     const url: URL = new URL(request.url);
     const q: string | null = url.searchParams.get("q");
-    console.log(url.href);
 
 
     const user = await prisma.artwork.findMany({
@@ -14,6 +13,7 @@ export async function GET( request: Request ) {
             title: {
                 contains: q === null ? '' : q,
             },
+            year_of_mfg: '',
             image: {
                 not: {
                     contains: "art_default2.gif"
