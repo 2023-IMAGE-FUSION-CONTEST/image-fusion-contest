@@ -6,7 +6,7 @@ interface Params {
 }
 
 const Page = async ({ searchParams }: Params) => {
-    const data = await getSearch("oriental", searchParams.query);
+    const data = await getSearch(searchParams.query);
 
     return (
         <div className={`px-10 py-8`}>

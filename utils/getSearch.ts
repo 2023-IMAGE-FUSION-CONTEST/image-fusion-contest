@@ -1,11 +1,11 @@
 import { cache } from "react";
-import { PaintingType } from "@/types/ArtworkType";
 import { prisma } from "@/utils/prisma";
 import { getPlaiceholder } from "plaiceholder";
 
 
 const parseParams = (str: string) => {
     const result: any = {
+        painting: [],
         title: [],
         author: [],
         year_of_mfg: [],
@@ -21,7 +21,7 @@ const parseParams = (str: string) => {
 }
 
 
-export const getSearch = cache(async (type: PaintingType, query: string | string[] | undefined) => {
+export const getSearch = cache(async (query: string | string[] | undefined) => {
     /*
     같은 query tag끼리는 OR 연산자로 묶어서 검색
     다은 query tag끼리는 AND 연산자로 묶어서 검색
@@ -35,9 +35,6 @@ export const getSearch = cache(async (type: PaintingType, query: string | string
     const dbQuery: any = {
         AND: [
             {
-                type: type === "oriental" ? "한국화" : "서양화",
-            },
-            {
                 image: {
                     not: {
                         contains: "art_default2.gif"
@@ -45,6 +42,20 @@ export const getSearch = cache(async (type: PaintingType, query: string | string
                 },
             },
         ]
+    }
+
+    if (result.painting.length > 0) {
+        dbQuery.AND.push({
+            OR: result.painting.map((painting: string) => ({
+                type: {
+                    contains: painting
+                        .replace("_", " ")
+                        .replace("oriental", "한국화")
+                        .replace("western", "서양화")
+                        .replace("동양", "한국")
+                }
+            }))
+        });
     }
 
     if (result.title.length > 0) {

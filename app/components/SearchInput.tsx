@@ -27,19 +27,20 @@ function Tag() {
 }
 
 function Title() {
-    const router: string = usePathname();
+    const pathName: string = usePathname();
     const [title, setTitle] = useState('');
 
     useEffect(() => {
-        const pathName = router
         if (pathName === '/gallery/western') {
             setTitle('Western')
         } else if (pathName === '/gallery/museum') {
             setTitle('Museum')
+        } else if (pathName === '/gallery/search') {
+            setTitle('Search')
         } else {
             setTitle('Oriental')
         }
-    }, [router]);
+    }, [pathName]);
 
     return (
         <div className={`${anton.className} text-gray-200 text-9xl mb-20`}>
@@ -50,7 +51,7 @@ function Title() {
 
 export default function Input() {
     const router = useRouter();
-
+    const path = usePathname();
 
     const onEnterPress = (e: any) => {
         if (e.target.value === '') return;
@@ -58,7 +59,12 @@ export default function Input() {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
 
-            const query = `?query=${e.target.value.split(' ').join('+')}`;
+            const paintingType = path.split('/').at(-1);
+            let input: string = e.target.value;
+
+            if (!input.includes(":")) input = `title:${input}`;
+
+            const query = `?query=${(paintingType === "western" || paintingType === "oriental") ? `painting:${paintingType}+` : ``}${input.split(' ').join('+')}`;
             router.push(`/gallery/search${query}`);
         }
     }
