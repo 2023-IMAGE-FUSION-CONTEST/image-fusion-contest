@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Anton } from 'next/font/google';
 import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
 const anton = Anton({
     weight: ['400'],
@@ -58,7 +59,9 @@ export default function Input() {
 
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
-            router.push(`/gallery/${pathname}/${input}?q=${input}`);
+            const encodedString = encodeURIComponent(e.target.value);
+            router.push(`/gallery/oriental/search/${encodedString}/1`);
+            setInput('');
             e.target.value = '';
         }
     }
@@ -72,15 +75,6 @@ export default function Input() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onEnterPress}
             />
-            <div className="flex">
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-                <Tag/>
-            </div>
         </div>
     );
 }

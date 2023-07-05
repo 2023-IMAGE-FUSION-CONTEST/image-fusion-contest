@@ -1,6 +1,7 @@
 import ArtworkGrid from "@/app/components/ArtworkGrid";
 import Pagination from "@/app/components/Pagination";
-import { getArtworkCount, getArtworks } from "@/utils/getArtworks";
+import {getArtworkCount} from "@/utils/getArtworks";
+import {getSearch} from "@/utils/getSearch";
 
 export const dynamic = "force-static";
 
@@ -13,12 +14,11 @@ export const generateStaticParams = async () => {
     });
 }
 
-const Page = async ({ params }: { params: { slug: string } }) => {
-    
-    const page = (params.slug && (!isNaN(Number(params.slug)) && Number(params.slug) > 0)) ? Number(params.slug) : 1;
-    const data = await getArtworks(page, "oriental");
-    const count = await getArtworkCount("oriental");
 
+const Page = async ({params}: {params: {slug: string, searchQuery: string}}) => {
+    const page = (params.slug && (!isNaN(Number(params.slug)) && Number(params.slug) > 0)) ? Number(params.slug) : 1;
+    const data = await getSearch(page, "oriental", params.searchQuery);
+    const count = await getArtworkCount("oriental");
     return (
         <div className={`px-10 py-8`}>
             {/* @ts-ignore */}
@@ -27,5 +27,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         </div>
     );
 };
+
 
 export default Page;
