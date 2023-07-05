@@ -49,8 +49,6 @@ function Title() {
 }
 
 export default function Input() {
-    const [input, setInput] = useState('');
-    const [pathname]: string[] = usePathname().split('/').slice(-1);
     const router = useRouter();
 
 
@@ -59,10 +57,9 @@ export default function Input() {
 
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
-            const encodedString = encodeURIComponent(e.target.value);
-            router.push(`/gallery/oriental/search/${encodedString}/1`);
-            setInput('');
-            e.target.value = '';
+
+            const query = `?query=${e.target.value.split(' ').join('+')}`;
+            router.push(`/gallery/search${query}`);
         }
     }
 
@@ -72,7 +69,6 @@ export default function Input() {
             <input
                 className="pr-8 pl-3 py-2 bg-gray-800 text-white placeholder-gray-500 w-7/12 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 mb-5"
                 placeholder="검색를 입력해 주세요."
-                onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onEnterPress}
             />
         </div>
