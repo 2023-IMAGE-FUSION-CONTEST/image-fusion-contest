@@ -12,10 +12,21 @@ const parseParams = (str: string) => {
     }
 
     const params = str.split(" ");
-    params.forEach((param) => {
-        const [key, value] = param.split(":");
-        result[key].push(value);
-    });
+    try {
+        params.forEach((param) => {
+            const [key, value] = param.split(":");
+
+            if (key in result) result[key].push(value);
+        });
+    } catch (e) {
+        console.error(e);
+        return {
+            painting: [],
+            title: [],
+            author: [],
+            year_of_mfg: [],
+        }
+    }
 
     return result;
 }
