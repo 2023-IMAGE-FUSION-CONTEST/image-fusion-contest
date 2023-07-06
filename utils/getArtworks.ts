@@ -4,10 +4,6 @@ import { getPlaiceholder } from "plaiceholder";
 import { PaintingType } from "@/types/ArtworkType";
 import "server-only";
 
-export const preload = (page: number, type: PaintingType) => {
-    void getArtworks(page, type);
-}
-
 export const getArtworks = cache(async (page: number, type: PaintingType) => {
     const data = await prisma.artwork.findMany({
         where: {
