@@ -40,6 +40,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                 border
                 rounded-xl
                 shadow-2xl
+                z-50
             `}
         >
             <div
