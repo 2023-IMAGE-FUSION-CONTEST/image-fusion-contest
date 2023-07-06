@@ -1,65 +1,94 @@
-import {cache} from "react";
-import {PaintingType} from "@/types/ArtworkType";
-import {prisma} from "@/utils/prisma";
-import {getPlaiceholder} from "plaiceholder";
+import { cache } from "react";
+import { prisma } from "@/utils/prisma";
+import { getPlaiceholder } from "plaiceholder";
 
 
-function parseString(str: string) {
-    let result = {
-        title: '',
-        year: '',
-        author: ''
-    };
-    const parts = str.split(' ');
+const parseParams = (str: string) => {
+    const result: any = {
+        painting: [],
+        title: [],
+        author: [],
+        year_of_mfg: [],
+    }
 
-    for (let part of parts) {
-        if (part.startsWith('tag:')) {
-            let tagValue: string = part.substring(4);
+    const params = str.split(" ");
+    try {
+        params.forEach((param) => {
+            const [key, value] = param.split(":");
 
-            if (!isNaN(Number(tagValue))) {
-                result.year = tagValue;
-            }
-            else {
-                result.author = tagValue;
-            }
-        } else {
-            result.title += part + ' ';
+            if (key in result) result[key].push(value);
+        });
+    } catch (e) {
+        console.error(e);
+        return {
+            painting: [],
+            title: [],
+            author: [],
+            year_of_mfg: [],
         }
     }
-    result.title = result.title.trim();
 
     return result;
 }
 
 
-export const getSearch = cache(async (page: number, type: PaintingType, query: string) => {
-    const result = parseString(decodeURIComponent(query));
+export const getSearch = cache(async (query: string | string[] | undefined) => {
+    /*
+    같은 query tag끼리는 OR 연산자로 묶어서 검색
+    다은 query tag끼리는 AND 연산자로 묶어서 검색
+    ex) query = "title:연 title:가 author:김 tag:2020 tag:2021"라면
+    title이 연이거나 가이고 author가 김이고 tag가 2020이거나 2021인 작품을 검색
+    */
 
-    let whereClause: any = {
-        type: type === "oriental" ? "한국화" : "서양화",
-        title: {
-            contains: result.title
-        },
-        image: {
-            not: {
-                contains: "art_default2.gif"
-            }
-        }
+    if (!query || typeof(query) === "object") return [];
+
+    const result = parseParams(query);
+    const dbQuery: any = {
+        AND: [
+            {
+                image: {
+                    not: {
+                        contains: "art_default2.gif"
+                    }
+                },
+            },
+        ]
     }
 
-    if (result.year !== "") {
-        whereClause["year_of_mfg"] = result.year;
-    }
-    if (result.author !== "") {
-        whereClause["author"] = {contains: result.author};
+    if (result.painting.length > 0) {
+        dbQuery.AND.push({
+            OR: result.painting.map((painting: string) => ({
+                type: {
+                    contains: painting
+                        .replace("_", " ")
+                        .replace("oriental", "한국화")
+                        .replace("western", "서양화")
+                        .replace("동양", "한국")
+                }
+            }))
+        });
     }
 
-    console.log(whereClause);
+    if (result.title.length > 0) {
+        dbQuery.AND.push({
+            OR: result.title.map((title: string) => ({ title: { contains: title.replace("_", " ") } }))
+        });
+    }
+
+    if (result.author.length > 0) {
+        dbQuery.AND.push({
+            OR: result.author.map((author: string) => ({ author: { contains: author.replace("_", " ") } }))
+        });
+    }
+
+    if (result.year_of_mfg.length > 0) {
+        dbQuery.AND.push({
+            OR: result.year_of_mfg.map((year_of_mfg: string) => ({ year_of_mfg: { contains: year_of_mfg.replace("_", " ") } }))
+        });
+    }
+
     const data = await prisma.artwork.findMany({
-        where: whereClause,
-        // 범위
-        skip: (page - 1) * 50,
-        take: 50,
+        where: dbQuery,
     }).then(async (res) => {
         const response = await Promise.all(
             res.map(async (item) => {
