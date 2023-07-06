@@ -5,7 +5,7 @@ function Header() {
     const smallBtnOption: string = `px-4 pt-2 text-gray-50 text-sm hover:underline`;
 
     return (
-        <nav className="fixed left-0 top-0 z-10 w-full flex justify-between bg-zinc-950 py-2 px-10 border-b-2 border-gray-50 shadow-2xl">
+        <nav className="absolute left-0 top-0 z-10 w-full flex justify-between bg-zinc-950 py-2 px-10 border-b-2 border-gray-50 shadow-2xl">
         <Link
                 href={`/`}
                 className={`${bigBtnOption}
