@@ -6,6 +6,46 @@ export default function ClientSection() {
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState("");
     const [response, setResponse] = useState<String>("");
+
+    const prompt = `Q: ${input} Generate a response with less than 200 characters.`;
+
+    const generateResponse = async (e: any) => {
+        e.preventDefault();
+        setResponse("");
+        setLoading(true);
+
+        const response = await fetch("/api/generate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                prompt,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+
+        // This data is a ReadableStream
+        const data = response.body;
+        if (!data) {
+            return;
+        }
+
+        const reader = data.getReader();
+        const decoder = new TextDecoder();
+        let done = false;
+
+        while (!done) {
+            const { value, done: doneReading } = await reader.read();
+            done = doneReading;
+            const chunkValue = decoder.decode(value);
+            setResponse((prev) => prev + chunkValue);
+        }
+        setLoading(false);
+    };
     return (
         <div className="w-full max-w-xl">
             <textarea
@@ -20,6 +60,7 @@ export default function ClientSection() {
             {!loading ? (
                 <button
                     className="w-full rounded-xl bg-neutral-900 px-4 py-2 font-medium text-white hover:bg-black/80"
+                    onClick={(e) => generateResponse(e)}
                 >
                     보내기 &rarr;
                 </button>
