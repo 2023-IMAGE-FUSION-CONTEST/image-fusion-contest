@@ -16,6 +16,19 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
     const imageRef = useRef<HTMLImageElement>(null);
     const [baseImage, setBaseImage] = useState<string | null | undefined>(null);
 
+    const [showMore, setShowMore] = useState(false);
+    const [description, setDescription] = useState(
+        data.description.length > 200 ? `${data.description.substring(0, 160)}...` : data.description
+    );
+    const handleReadMore = () => {
+        setShowMore(!showMore);
+    }
+
+    useEffect(() => {
+        setDescription(data.description.length > 200 ? `${data.description.substring(0, 200)}...` : data.description);
+        setShowMore(false);
+    }, [data.description])
+
     useEffect(() => {
         if (imageRef.current) {
             imageRef.current.onload = () => {
@@ -36,7 +49,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                 right-[1%]
                 w-[36rem]
                 h-[95%]
-                bg-white
+                bg-yellow-200
                 border
                 rounded-xl
                 shadow-2xl
@@ -50,7 +63,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                     overflow-y-auto
                 `}
             >
-                <div className={`bg-white w-full h-10 flex flex-row px-4 items-center justify-between`}>
+                <div className={`bg-gray-700 w-full h-10 flex flex-row px-4 items-center justify-between`}>
                     <Link href={data.url}>
                         <div className={`flex flex-row gap-3 items-center cursor-pointer hover:text-blue-600`}>
                             <div>
@@ -100,7 +113,8 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.year_of_mfg !== "" && <div>{ data.year_of_mfg }</div>}
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
-                        <div className={`leading-6 tracking-wide`}>{ data.description }</div>
+                        <div className={`leading-6 tracking-wide`}>{ !showMore ? description : data.description }</div>
+                        <button className="w-full h-8" onClick={handleReadMore}>click</button>
                         <ImageFusion baseImage={baseImage} imageUrl={`https://artbank.go.kr${data.image}`} />
                     </div>
                 </div>
