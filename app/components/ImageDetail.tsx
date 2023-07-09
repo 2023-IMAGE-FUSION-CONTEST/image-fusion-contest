@@ -114,7 +114,11 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
                         <div className={`leading-6 tracking-wide`}>{ !showMore ? description : data.description }</div>
-                        <button className="w-full h-8" onClick={handleReadMore}>click</button>
+
+                        <button className="w-full h-8 bg-blue-200 hover:bg-white hover:bg-opacity-50 transition-colors duration-300" onClick={handleReadMore}>
+                            {!showMore ? `More` : `Less`}
+                        </button>
+
                         <ImageFusion baseImage={baseImage} imageUrl={`https://artbank.go.kr${data.image}`} />
                     </div>
                 </div>

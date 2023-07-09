@@ -4,27 +4,12 @@ import Link from "next/link";
 import { Anton } from 'next/font/google';
 import {useEffect, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
-import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
 const anton = Anton({
     weight: ['400'],
     subsets: ['latin'],
 });
 
-
-function Tag() {
-    const tailwind = `
-        bg-gray-100 text-gray-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded 
-        dark:bg-gray-700 dark:text-gray-300
-        hover:bg-purple-800 hover:text-purple-100 
-        transition-colors
-    `
-    return (
-        <Link className={`${tailwind}`} href="/">
-            value
-        </Link>
-    )
-}
 
 function Title() {
     const pathName: string = usePathname();
