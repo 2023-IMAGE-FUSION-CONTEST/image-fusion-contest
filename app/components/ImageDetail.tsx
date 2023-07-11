@@ -6,17 +6,36 @@ import Image from "next/image";
 import Link from "next/link";
 import ImageFusion from "@/app/components/ImageFusion";
 import { getBase64Image } from "@/utils/getBase54Image";
+import {menu, subText, text} from "@/app/colos";
 
 interface ImageDetailProps {
     data: ArtworkType,
     setSelected: any
 }
 
+const closeSelected = {
+    id: 0,
+    title: "",
+    description: "",
+    author: "",
+    type: "",
+    year_of_mfg: "",
+    url: "",
+    image: "",
+    imageSize: {
+        width: 0,
+        height: 0
+    },
+    blurDataURL: ""
+}
+
+
 const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
     const imageRef = useRef<HTMLImageElement>(null);
     const [baseImage, setBaseImage] = useState<string | null | undefined>(null);
 
     const [showMore, setShowMore] = useState(false);
+    const [viewMore, setViewMore] = useState(false);
     const [description, setDescription] = useState(
         data.description.length > 200 ? `${data.description.substring(0, 160)}...` : data.description
     );
@@ -25,7 +44,9 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
     }
 
     useEffect(() => {
-        setDescription(data.description.length > 200 ? `${data.description.substring(0, 200)}...` : data.description);
+        const text = data.description.length > 100 ? `${data.description.substring(0, 100)}...` : data.description;
+        setViewMore(text.length > 100);
+        setDescription(text);
         setShowMore(false);
     }, [data.description])
 
@@ -42,19 +63,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
 
     return (
         <div
-            className={`
-                overflow-hidden
-                fixed
-                top-[2.5%]
-                right-[1%]
-                w-[36rem]
-                h-[95%]
-                bg-yellow-200
-                border
-                rounded-xl
-                shadow-2xl
-                z-50
-            `}
+            className={`overflow-hidden fixed top-[2.5%] right-[1%] w-[36rem] h-[95%] bg-[#1A1D25] z-50 text-[#FFFFFF] shadow-2xl rounded-xl`}
         >
             <div
                 className={`
@@ -63,7 +72,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                     overflow-y-auto
                 `}
             >
-                <div className={`bg-gray-700 w-full h-10 flex flex-row px-4 items-center justify-between`}>
+                <div className={`bg-[${menu}] w-full h-10 flex flex-row px-4 items-center justify-between border-b border-[#586065] mb-4`}>
                     <Link href={data.url}>
                         <div className={`flex flex-row gap-3 items-center cursor-pointer hover:text-blue-600`}>
                             <div>
@@ -78,24 +87,9 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                     </Link>
                     <div
                         onClick={() => {
-                            setSelected(
-                                {
-                                    id: 0,
-                                    title: "",
-                                    description: "",
-                                    author: "",
-                                    type: "",
-                                    year_of_mfg: "",
-                                    url: "",
-                                    image: "",
-                                    imageSize: {
-                                        width: 0,
-                                        height: 0
-                                    },
-                                    blurDataURL: ""
-                                }
-                            );
+                            setSelected(closeSelected);
                         }}
+                        className="hover:bg-white hover:bg-opacity-30 cursor-pointer"
                     >
                         <svg fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className={`w-5 h-5`}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -103,7 +97,7 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                     </div>
                 </div>
                 <div className={`relative w-full`}>
-                    <div className={`relative w-full h-96 bg-[#f1f3f4]`}>
+                    <div className={`relative w-full h-96 bg-[${menu}]`}>
                         <Image ref={imageRef} src={`https://artbank.go.kr${data.image}`} alt={data.image} fill={true} className={`object-contain`} />
                     </div>
                     <div className={`px-4 py-4`}>
@@ -113,11 +107,13 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.year_of_mfg !== "" && <div>{ data.year_of_mfg }</div>}
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
-                        <div className={`leading-6 tracking-wide`}>{ !showMore ? description : data.description }</div>
+                        <div className={`tracking-wide leading-relaxed text-[#a5a5a5]`}>{ !showMore ? description : data.description }</div>
 
-                        <button className="w-full h-8 bg-blue-200 hover:bg-white hover:bg-opacity-50 transition-colors duration-300" onClick={handleReadMore}>
-                            {!showMore ? `More` : `Less`}
-                        </button>
+                        {viewMore && <button
+                            className="w-full h-8 bg-gray-800 text-white border-b-1 border-white hover:bg-gray-700 transition-colors duration-300 mt-2"
+                            onClick={handleReadMore}>
+                            {!showMore ? `View More` : `View Less`}
+                        </button>}
 
                         <ImageFusion baseImage={baseImage} imageUrl={`https://artbank.go.kr${data.image}`} />
                     </div>

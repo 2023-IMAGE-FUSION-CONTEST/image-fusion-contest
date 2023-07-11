@@ -58,8 +58,8 @@ export default function Input() {
         <div className="w-full mt-36 flex flex-col items-center">
             <Title />
             <input
-                className="pr-8 pl-3 py-2 bg-gray-800 text-white placeholder-gray-500 w-7/12 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 mb-5"
-                placeholder="검색를 입력해 주세요."
+                className="pr-8 pl-3 py-2 bg-gray-800 text-white placeholder-gray-500 w-2/5 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 mb-5"
+                placeholder="year:2021 author:name"
                 onKeyDown={onEnterPress}
             />
         </div>
