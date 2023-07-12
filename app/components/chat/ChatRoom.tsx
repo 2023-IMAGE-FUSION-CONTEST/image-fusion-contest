@@ -1,4 +1,5 @@
-import {ChatHeader, ChatInput} from "@/app/components/chat/ChatUi";
+import {ChatInput} from "@/app/components/chat/ChatInput";
+import {ChatHeader} from "@/app/components/chat/ChatHeader";
 
 export default function ChatRoom() {
     return (
