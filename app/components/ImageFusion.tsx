@@ -113,8 +113,8 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
 
     return (
         <div className={`mt-4`}>
-            <div className={`text-2xl`}>이미지 합성</div>
-            <div className={`border border-purple-700 rounded-xl mt-4`}>
+            <div className={`font-extrabold text-transparent text-5xl bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500`}>Combine</div>
+            <div className={`border via-red-500 mt-4`}>
                 <div className={`mt-8 flex flex-row items-center justify-between px-10`}>
                     <div className={`relative w-40 h-40 flex items-center justify-center rounded-md overflow-hidden`}>
                         <Image src={imageUrl} alt={"image.png"} fill={true} className={`object-cover`} />
@@ -131,18 +131,18 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
 
                 <div className={`mt-10 px-6 flex flex-col gap-3`}>
                     <div>
-                        <div className={`block font-base text-neutral-700 text-xl`}>이미지 1 강도</div>
+                        <div className={`block font-base border-blue-300 text-xl`}>이미지 1 강도</div>
                         <div className={`flex flex-row justify-between items-center`}>
                             <div className={`flex flex-row gap-4 mt-2`}>
                                 <div className={`w-4`}>0</div>
                                 <CustomInput min={0} max={5} step={0.05} value={image1Strength} onChange={(e: any) => setImage1Strength(Number(e.currentTarget.value))} />
                                 <div className={`w-4 ml-1`}>5</div>
                             </div>
-                            <div className={`w-20 h-7 text-sm text-purple-900 border border-purple-700 rounded-lg flex items-center justify-center`}>{ image1Strength }</div>
+                            <div className={`w-20 h-7 text-sm border-blue-300 border border-purple-700 rounded-lg flex items-center justify-center`}>{ image1Strength }</div>
                         </div>
                     </div>
                     <div>
-                        <div className={`block font-base text-neutral-700 text-xl`}>이미지 2 강도</div>
+                        <div className={`block font-base border-blue-300 text-xl`}>이미지 2 강도</div>
                         <div className={`flex flex-row justify-between items-center`}>
                             <div className={`flex flex-row gap-4 mt-2`}>
                                 <div className={`w-4`}>0</div>

@@ -42,6 +42,7 @@ export default function ClientSection() {
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
+            console.log(chunkValue)
             setResponse((prev) => prev + chunkValue);
         }
         setLoading(false);

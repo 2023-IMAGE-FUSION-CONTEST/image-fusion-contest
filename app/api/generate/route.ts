@@ -1,13 +1,8 @@
-import {OpenAIStream, OpenAIStreamPayload} from "@/utils/openAiStream";
-
+import { OpenAIStream, OpenAIStreamPayload } from "@/utils/openAiStream";
 
 if (!process.env.OPENAI_API_KEY) {
     throw new Error("Missing env var from OpenAI");
 }
-
-export const config = {
-    runtime: "edge",
-};
 
 export async function POST(req: Request): Promise<Response> {
     const { prompt } = (await req.json()) as {
@@ -19,7 +14,7 @@ export async function POST(req: Request): Promise<Response> {
     }
 
     const payload: OpenAIStreamPayload = {
-        model: "gpt-3.5-turbo",
+        model: "gpt-3.5-turbo-16k",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
         top_p: 1,
