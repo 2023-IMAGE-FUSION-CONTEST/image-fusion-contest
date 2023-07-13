@@ -94,7 +94,7 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
             ]
         };
 
-        const res = fetch("https://port-0-image-fusion-contest-backend-7xwyjq992lljjt5bow.sel4.cloudtype.app/api/image-fusion", {
+        fetch("https://port-0-image-fusion-contest-backend-7xwyjq992lljjt5bow.sel4.cloudtype.app/api/image-fusion", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -114,7 +114,7 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
     return (
         <div className={`mt-4`}>
             <div className={`font-extrabold text-transparent text-5xl bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500`}>Combine</div>
-            <div className={`border via-red-500 mt-4`}>
+            <div className={`border via-red-500 mt-4 rounded-xl`}>
                 <div className={`mt-8 flex flex-row items-center justify-between px-10`}>
                     <div className={`relative w-40 h-40 flex items-center justify-center rounded-md overflow-hidden`}>
                         <Image src={imageUrl} alt={"image.png"} fill={true} className={`object-cover`} />
@@ -131,62 +131,62 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
 
                 <div className={`mt-10 px-6 flex flex-col gap-3`}>
                     <div>
-                        <div className={`block font-base border-blue-300 text-xl`}>이미지 1 강도</div>
+                        <div className={`block font-base text-xl`}>이미지 1 강도</div>
                         <div className={`flex flex-row justify-between items-center`}>
                             <div className={`flex flex-row gap-4 mt-2`}>
                                 <div className={`w-4`}>0</div>
                                 <CustomInput min={0} max={5} step={0.05} value={image1Strength} onChange={(e: any) => setImage1Strength(Number(e.currentTarget.value))} />
                                 <div className={`w-4 ml-1`}>5</div>
                             </div>
-                            <div className={`w-20 h-7 text-sm border-blue-300 border border-purple-700 rounded-lg flex items-center justify-center`}>{ image1Strength }</div>
+                            <div className={`w-20 h-7 text-sm border border-purple-700 rounded-lg flex items-center justify-center`}>{ image1Strength }</div>
                         </div>
                     </div>
                     <div>
-                        <div className={`block font-base border-blue-300 text-xl`}>이미지 2 강도</div>
+                        <div className={`block font-base text-xl`}>이미지 2 강도</div>
                         <div className={`flex flex-row justify-between items-center`}>
                             <div className={`flex flex-row gap-4 mt-2`}>
                                 <div className={`w-4`}>0</div>
                                 <CustomInput min={0} max={5} step={0.05} value={image2Strength} onChange={(e: any) => setImage2Strength(Number(e.currentTarget.value))} />
                                 <div className={`w-4 ml-1`}>5</div>
                             </div>
-                            <div className={`w-20 h-7 text-sm text-purple-900 border border-purple-700 rounded-lg flex items-center justify-center`}>{ image2Strength }</div>
+                            <div className={`w-20 h-7 text-sm border border-purple-700 rounded-lg flex items-center justify-center`}>{ image2Strength }</div>
                         </div>
                     </div>
                     <div>
-                        <div className={`block font-base text-neutral-700 text-xl`}>CFG 스케일</div>
+                        <div className={`block font-base text-xl`}>CFG 스케일</div>
                         <div className={`flex flex-row justify-between items-center`}>
                             <div className={`flex flex-row gap-4 mt-2`}>
                                 <div className={`w-4`}>1</div>
                                 <CustomInput min={1} max={10} step={0.5} value={cfgScale} onChange={(e: any) => setCfgScale(Number(e.currentTarget.value))} />
                                 <div className={`w-4 ml-1`}>10</div>
                             </div>
-                            <div className={`w-20 h-7 text-sm text-purple-900 border border-purple-700 rounded-lg flex items-center justify-center`}>{ cfgScale }</div>
+                            <div className={`w-20 h-7 text-sm border border-purple-700 rounded-lg flex items-center justify-center`}>{ cfgScale }</div>
                         </div>
                     </div>
                     <div>
-                        <div className={`block font-base text-neutral-700 text-xl`}>시드</div>
+                        <div className={`block font-base text-xl`}>시드</div>
                         <div className={`flex flex-row justify-between items-center`}>
                             <div className={`flex flex-row gap-4 mt-2`}>
                                 <div className={`w-4`}>0</div>
                                 <CustomInput min={0} max={10000} step={1} value={seed} onChange={(e: any) => setSeed(Number(e.currentTarget.value))} />
                                 <div className={`w-4 ml-1`}>10000</div>
                             </div>
-                            <div className={`w-20 h-7 text-sm text-purple-900 border border-purple-700 rounded-lg flex items-center justify-center`}>{ seed }</div>
+                            <div className={`w-20 h-7 text-sm border border-purple-700 rounded-lg flex items-center justify-center`}>{ seed }</div>
                         </div>
                     </div>
                     <div>
-                        <div className={`block font-base text-neutral-700 text-xl`}>스텝</div>
+                        <div className={`block font-base text-xl`}>스텝</div>
                         <div className={`flex flex-row justify-between items-center`}>
                             <div className={`flex flex-row gap-4 mt-2`}>
                                 <div className={`w-4`}>10</div>
                                 <CustomInput min={10} max={100} step={5} value={steps} onChange={(e: any) => setSteps(Number(e.currentTarget.value))} />
                                 <div className={`w-4 ml-1`}>100</div>
                             </div>
-                            <div className={`w-20 h-7 text-sm text-purple-900 border border-purple-700 rounded-lg flex items-center justify-center`}>{ steps }</div>
+                            <div className={`w-20 h-7 text-sm border border-purple-700 rounded-lg flex items-center justify-center`}>{ steps }</div>
                         </div>
                     </div>
                     <div
-                        className={`flex justify-center items-center p-1 bg-purple-700 text-white w-full h-10 rounded-xl cursor-pointer mt-6`}
+                        className={`flex justify-center items-center p-1 bg-purple-700 text-white w-full h-10 rounded-md cursor-pointer mt-6`}
                         onClick={handleClick}
                     >
                         생성
@@ -207,11 +207,11 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
                                         src={`https://demo.70e9f1a0f18a49a29a0cd16c9e0750df.lambdaspaces.com/file=${resultImage}`}
                                         alt={resultImage}
                                         fill={true}
-                                        className={`object-cover rounded-xl`}
+                                        className={`object-cover rounded-md`}
                                     />
                                 </div>
                             ) : (
-                                <div className={`w-full h-[28rem] bg-zinc-200 rounded-xl animate-pulse`} />
+                                <div className={`w-full h-[28rem] bg-zinc-800 rounded-xl animate-pulse`} />
                             )
                         }
                     </div>

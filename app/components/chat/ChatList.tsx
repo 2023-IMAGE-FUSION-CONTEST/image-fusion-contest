@@ -21,7 +21,10 @@ const ChatList = () => {
                 overflow-x-hidden
                 overflow-y-auto
                 w-full
-                h-[calc(100%-2.5rem)]
+                h-[calc(100%-3rem-4px)]
+                scrollbar-hide
+                px-4
+                text-white
             `}
         >
             {

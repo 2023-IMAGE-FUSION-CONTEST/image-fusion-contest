@@ -33,7 +33,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
                         rounded-tl-md
                         rounded-bl-md
                         hover:bg-[#004ABF]
-                        hover:text-white
+                        text-white
                         transform
                         duration-300
                     `}
@@ -53,7 +53,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
                             border
                             border-x-[0.5px]
                             hover:bg-[#004ABF]
-                            hover:text-white
+                            text-white
                             transform
                             duration-300
                         `}
@@ -77,12 +77,11 @@ const Pagination = ({ type, count }: PaginationProps) => {
                                     justify-center
                                     items-center
                                     cursor-pointer
-                                    ${nowPage === item ? "text-[#004ABF]" : "text-black"}
+                                    ${nowPage === item ? "text-[#004ABF]" : "text-white"}
                                     p-2
                                     border-y-[1px]
                                     border-x-[0.5px]
                                     hover:bg-[#004ABF]
-                                    hover:text-white
                                     transform
                                     duration-300
                                 `}
@@ -103,7 +102,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
                             border
                             border-x-[0.5px]
                             hover:bg-[#004ABF]
-                            hover:text-white
+                            text-white
                             transform
                             duration-300
                         `}
@@ -124,7 +123,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
                         rounded-tr-md
                         rounded-br-md
                         hover:bg-[#004ABF]
-                        hover:text-white
+                        text-white
                         transform
                         duration-300
                     `}
