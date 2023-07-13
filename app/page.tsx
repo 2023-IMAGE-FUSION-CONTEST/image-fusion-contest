@@ -32,10 +32,10 @@ function ImageLink({ href, src, alt }: ImageLinkProps) {
 
 export default function Home() {
     return (
-        <main className="h-screen flex flex-row">
-            <ImageLink href={`/gallery/western`} src={"/main-page-img/western-painting.jpg"} alt={`서양화`} />
-            <ImageLink href={`/gallery/oriental`} src={"/main-page-img/oriental-painting.jpg"} alt={`한국화`} />
-            <ImageLink href={`/gallery/museum`} src={"/main-page-img/museum.jpg"} alt={`박물관`} />
+        <main>
+            <video id="background-video" autoPlay loop muted poster="https://assets.codepen.io/6093409/river.jpg" className="w-full h-auto">
+                <source src="https://assets.codepen.io/6093409/river.mp4" type="video/mp4" />
+            </video>
         </main>
     )
 }
