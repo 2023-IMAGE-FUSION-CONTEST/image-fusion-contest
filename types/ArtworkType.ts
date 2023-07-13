@@ -11,4 +11,4 @@ export interface ArtworkType {
     imageSize: { width: number, height: number }
 }
 
-export type PaintingType = "oriental" | "western";
+export type PaintingType = "한국화" | "서양화" | "문인화" | "판화" | "서예";

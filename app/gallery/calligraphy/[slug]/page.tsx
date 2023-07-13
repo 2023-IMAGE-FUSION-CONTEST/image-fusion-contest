@@ -5,7 +5,7 @@ import { getArtworkCount, getArtworks } from "@/utils/getArtworks";
 export const dynamic = "force-static";
 
 export const generateStaticParams = async () => {
-    const count = await getArtworkCount("서양화");
+    const count = await getArtworkCount("서예");
     const pages = Math.ceil(count / 50);
 
     return Array.from({length: pages}, (_, i) => {
@@ -15,14 +15,14 @@ export const generateStaticParams = async () => {
 
 const Page = async ({ params }: { params: { slug: string } }) => {
     const page = (params.slug && (!isNaN(Number(params.slug)) && Number(params.slug) > 0)) ? Number(params.slug) : 1;
-    const data = await getArtworks(page, "서양화");
-    const count = await getArtworkCount("서양화");
+    const data = await getArtworks(page, "서예");
+    const count = await getArtworkCount("서예");
 
     return (
         <div className={`px-10 py-8`}>
             {/* @ts-ignore */}
             <ArtworkGrid data={data} />
-            <Pagination type={"western"} count={count} />
+            <Pagination type={"oriental"} count={count} />
         </div>
     );
 };

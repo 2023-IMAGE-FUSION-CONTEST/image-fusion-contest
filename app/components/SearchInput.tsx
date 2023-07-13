@@ -22,10 +22,16 @@ function Title() {
             setTitle('Museum')
         } else if (pathName === '/gallery/search') {
             setTitle('Search')
-        } else {
+        } else if (pathName === '/gallery/oriental') {
             setTitle('Oriental')
+        }else if (pathName === '/gallery/calligraphy') {
+            setTitle('Calligraphy')
+        } else if (pathName === '/gallery/engraving') {
+            setTitle('Engraving')
+        } else {
+            setTitle('Culture')
         }
-    }, [pathName]);
+}, [pathName]);
 
     return (
         <div className={`${anton.className} text-gray-200 text-9xl mb-20`}>

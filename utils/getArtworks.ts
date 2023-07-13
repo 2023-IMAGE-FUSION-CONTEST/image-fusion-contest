@@ -7,7 +7,7 @@ import "server-only";
 export const getArtworks = cache(async (page: number, type: PaintingType) => {
     const data = await prisma.artwork.findMany({
         where: {
-            type: type === "oriental" ? "한국화" : "서양화",
+            type: type,
             image: {
                 not: {
                     contains: "art_default2.gif"
@@ -45,7 +45,7 @@ export const getArtworks = cache(async (page: number, type: PaintingType) => {
 export const getArtworkCount = cache(async (type: PaintingType) => {
     const count = await prisma.artwork.count({
         where: {
-            type: type === "oriental" ? "한국화" : "서양화",
+            type: type,
             image: {
                 not: {
                     contains: "art_default2.gif"
