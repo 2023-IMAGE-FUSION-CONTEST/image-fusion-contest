@@ -40,9 +40,9 @@ export default function Home() {
         <main className="h-screen flex flex-row">
             <ImageLink href={`/gallery/western`} src={"/main-page-img/western-painting.jpg"} alt={`서양화`} />
             <ImageLink href={`/gallery/oriental`} src={"/main-page-img/oriental-painting.jpg"} alt={`한국화`} />
-            <ImageLink href={`/gallery/culture`} src={"/main-page-img/museum.jpg"} alt={`박물관`} />
-            <ImageLink href={`/gallery/oriental`} src={"/main-page-img/oriental-painting.jpg"} alt={`한국화`} />
-            <ImageLink href={`/gallery/western`} src={"/main-page-img/western-painting.jpg"} alt={`서양화`} />
+            <ImageLink href={`/gallery/culture`} src={"/main-page-img/museum.jpg"} alt={`문인화`} />
+            <ImageLink href={`/gallery/engraving`} src={"/main-page-img/oriental-painting.jpg"} alt={`판화`} />
+            <ImageLink href={`/gallery/calligraphy`} src={"/main-page-img/western-painting.jpg"} alt={`서예`} />
         </main>
 
 
