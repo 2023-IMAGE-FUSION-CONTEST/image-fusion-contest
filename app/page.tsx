@@ -11,7 +11,7 @@ function ImageLink({ href, src, alt }: ImageLinkProps) {
     const commonClasses = "absolute w-full flex justify-center";
 
     return (
-        <Link href={href} className="flex-1 relative">
+        <Link href={href} className={`flex-1 relative group`}>
             <Image
                 src={src}
                 alt={alt}
@@ -20,22 +20,33 @@ function ImageLink({ href, src, alt }: ImageLinkProps) {
                 placeholder={`blur`}
                 blurDataURL={src}
             />
-            <div className={`${commonClasses} bottom-12`}>
+            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+            <div className={`${commonClasses} bottom-12 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 transition-all duration-500`}>
                 <p className="text-center text-6xl font-semibold text-white tracking-wide">
                     { alt }
                 </p>
             </div>
         </Link>
+
+
+
+
     )
 }
 
 
 export default function Home() {
     return (
-        <main>
-            <video id="background-video" autoPlay loop muted poster="https://assets.codepen.io/6093409/river.jpg" className="w-full h-auto">
-                <source src="https://assets.codepen.io/6093409/river.mp4" type="video/mp4" />
-            </video>
+        <main className="h-screen flex flex-row">
+            <ImageLink href={`/gallery/western`} src={"/main-page-img/western-painting.jpg"} alt={`서양화`} />
+            <ImageLink href={`/gallery/oriental`} src={"/main-page-img/oriental-painting.jpg"} alt={`한국화`} />
+            <ImageLink href={`/gallery/culture`} src={"/main-page-img/museum.jpg"} alt={`박물관`} />
+            <ImageLink href={`/gallery/oriental`} src={"/main-page-img/oriental-painting.jpg"} alt={`한국화`} />
+            <ImageLink href={`/gallery/western`} src={"/main-page-img/western-painting.jpg"} alt={`서양화`} />
         </main>
+
+
+
+
     )
 }

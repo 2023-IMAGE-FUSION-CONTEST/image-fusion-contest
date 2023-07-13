@@ -50,7 +50,17 @@ const nextConfig = {
                     }
                 ],
                 destination: "/gallery/western/1",
-            }
+            },
+            {
+                source: "/gallery/culture",
+                missing: [
+                    {
+                        type: "query",
+                        key: "page"
+                    }
+                ],
+                destination: "/gallery/culture/1",
+            },
         ]
     }
 }
