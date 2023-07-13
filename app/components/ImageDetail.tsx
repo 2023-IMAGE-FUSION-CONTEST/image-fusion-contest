@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ImageFusion from "@/app/components/ImageFusion";
 import { getBase64Image } from "@/utils/getBase54Image";
-import {menu, subText, text} from "@/app/colos";
+import { menu, subText, text } from "@/app/colos";
 
 interface ImageDetailProps {
     data: ArtworkType,

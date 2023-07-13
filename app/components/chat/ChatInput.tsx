@@ -1,52 +1,47 @@
 'use client'
 
 import {useChatList, useChatting} from "@/app/store/state";
-import {val} from "cheerio/lib/api/attributes";
 import {useState} from "react";
 
 export function ChatInput() {
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState("");
-    const [response, setResponse] = useState<String>("");
     const setChatList = useChatList(state => state.setList);
 
     const prompt = `Q: ${input}Generate a response with less than 100 characters.`
 
-    const generateResponse = async (e: any) => {
+    const generateResponse = (e: any) => {
         e.preventDefault();
-        setResponse("")
         setLoading(true);
 
-        const res = await fetch("/api/generate", {
+        fetch("/api/generate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({prompt,}),
-        });
+        })
+            .then(async (res) => {
+                if (!res.ok) throw new Error(res.statusText);
 
-        if (!res.ok) {
-            throw new Error(res.statusText);
-        }
+                const data = res.body;
+                if (!data) return;
 
-        const data = res.body;
+                const reader = data.getReader();
+                const decoder = new TextDecoder();
+                let done = false;
 
-        if (!data) {
-            return
-        }
+                let response = "";
+                while (!done) {
+                    const { value, done: doneReading } = await reader.read();
+                    done = doneReading;
+                    const chunkValue = decoder.decode(value);
+                    response += chunkValue;
+                }
 
-        const reader = data.getReader();
-        const decoder = new TextDecoder();
-        let done = false;
-
-        while (!done) {
-            const { value, done: doneReading } = await reader.read();
-            done = doneReading;
-            const chunkValue = decoder.decode(value);
-            setResponse((prev) => prev + chunkValue);
-        }
-        setChatList(response);
-        setLoading(false);
+                setChatList(response);
+                setLoading(false);
+            });
     }
 
     return (
