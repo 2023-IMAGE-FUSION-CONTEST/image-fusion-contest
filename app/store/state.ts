@@ -40,3 +40,18 @@ export const useChatList = create<ChatList>((set) => ({
     list: [],
     setList: value => set(state => ({list: [...state.list, value]}))
 }))
+
+
+type ImageDetail = {
+    description: String;
+    author: String;
+    setDescription: (value: String) => void;
+    setAuthor: (value: String) => void;
+}
+
+export const useImageDetail = create<ImageDetail>((set) => ({
+    description: "",
+    author: "",
+    setDescription: value => set({description: value}),
+    setAuthor: value => set({author: value}),
+}))

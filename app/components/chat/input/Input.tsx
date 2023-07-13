@@ -1,15 +1,36 @@
 'use client'
 
 import { useState } from "react";
-import { useChatList } from "@/app/store/state";
+import { useChatList, useImageDetail } from "@/app/store/state";
 import Button from "@/app/components/chat/input/Button";
+import {responseParse} from "@/utils/sessionStorage";
 
 const Input = () => {
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState("");
     const setChatList = useChatList(state => state.setList);
+    const imageDetail = useImageDetail(state => state.description);
+    const imageAuthor = useImageDetail(state => state.author);
 
-    const prompt = `Q: ${input}Generate a response with less than 100 characters.`
+    const prompt = `
+    Your role as an AI is to provide answers to questions related to an image that I provide.
+    Sentences that start with "D:" are descriptions of the image, while sentences that start with "Q:" are user's questions.
+    Sentences that start with "R:" are records of the previous chats, formatted as [Q: Question A: Answer]. 
+    These reference previous conversations, and if it's empty, it implies that it's the first conversation.
+
+        D: ${imageDetail}, author: ${imageAuthor}
+        Q: ${input}
+        R: ${sessionStorage.getItem("before")}
+        
+    Your goal is to provide answers to the user's current questions related to the image, based on the previous chat. If you know additional information that's not included in the description, explain it.
+    After providing an answer, mark with "<>==<>" and summarize the question and answer in the format "Q: Question A: Answer".
+
+    For example, for a question like "D: Description of the image... Q: Question about the image... A: Answer about the image...", the response should be something like "My thoughts on the given image and question are...".
+    Avoid repeating sentences starting with "D:", "Q:", "R:".
+
+Responses should be provided in Korean.
+    `
+
 
     const generateResponse = (e: any) => {
         e.preventDefault();
@@ -39,7 +60,7 @@ const Input = () => {
                     const chunkValue = decoder.decode(value);
                     response += chunkValue;
                 }
-
+                response = responseParse(response);
                 setChatList(response);
                 setLoading(false);
             });

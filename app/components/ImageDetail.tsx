@@ -7,6 +7,8 @@ import Link from "next/link";
 import ImageFusion from "@/app/components/ImageFusion";
 import { getBase64Image } from "@/utils/getBase54Image";
 import { menu, subText, text } from "@/app/colos";
+import {useImageDetail} from "@/app/store/state";
+
 
 interface ImageDetailProps {
     data: ArtworkType,
@@ -39,12 +41,18 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
     const [description, setDescription] = useState(
         data.description.length > 200 ? `${data.description.substring(0, 160)}...` : data.description
     );
+    const setImageDetail = useImageDetail(state => state.setDescription);
+    const setImageAuthor = useImageDetail(state => state.setAuthor);
+
+
     const handleReadMore = () => {
         setShowMore(!showMore);
     }
 
     useEffect(() => {
         const text = data.description.length > 100 ? `${data.description.substring(0, 100)}...` : data.description;
+        setImageDetail(data.description);
+        setImageAuthor(data.author);
         setViewMore(text.length > 100);
         setDescription(text);
         setShowMore(false);
