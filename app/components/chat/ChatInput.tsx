@@ -1,12 +1,13 @@
 'use client'
 
-import {useChatting} from "@/app/store/state";
+import {useChatList, useChatting} from "@/app/store/state";
 import {val} from "cheerio/lib/api/attributes";
 
 export function ChatInput() {
     const chat = useChatting();
+    const setChatList = useChatList(state => state.setList);
 
-    const prompt = `Q: ${chat.input}Generate a response with less than 10 characters.`
+    const prompt = `Q: ${chat.input}Generate a response with less than 100 characters.`
 
     const generateResponse = async (e: any) => {
         e.preventDefault();
@@ -41,6 +42,7 @@ export function ChatInput() {
             const chunkValue = decoder.decode(value);
             chat.setResponse(chunkValue);
         }
+        // setChatList(chat.response);
         chat.setLoading(false);
     }
     return (
@@ -52,7 +54,7 @@ export function ChatInput() {
                 onChange={e => chat.setInput(e.target.value)}
             />
             <button className="w-12 bg-fuchsia-700 text-2xl" onClick={e => generateResponse(e)}>
-                {chat.response}
+                ▶
             </button>
         </div>
     )

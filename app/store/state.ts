@@ -29,3 +29,14 @@ export const useChatting = create<chat>((set) => ({
     setInput: value => set({input: value}),
     setResponse: value => set(state => ({response: state.response + value})),
 }));
+
+
+type ChatList = {
+    list: string[],
+    setList: (value: string) => void
+}
+
+export const useChatList = create<ChatList>((set) => ({
+    list: [],
+    setList: value => set(state => ({list: [...state.list, value]}))
+}))
