@@ -50,7 +50,37 @@ const nextConfig = {
                     }
                 ],
                 destination: "/gallery/western/1",
-            }
+            },
+            {
+                source: "/gallery/culture",
+                missing: [
+                    {
+                        type: "query",
+                        key: "page"
+                    }
+                ],
+                destination: "/gallery/culture/1",
+            },
+            {
+                source: "/gallery/engraving",
+                missing: [
+                    {
+                        type: "query",
+                        key: "page"
+                    }
+                ],
+                destination: "/gallery/engraving/1",
+            },
+            {
+                source: "/gallery/calligraphy",
+                missing: [
+                    {
+                        type: "query",
+                        key: "page"
+                    }
+                ],
+                destination: "/gallery/calligraphy/1",
+            },
         ]
     }
 }
