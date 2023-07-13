@@ -24,7 +24,13 @@ const ChatList = () => {
                 h-[calc(100%-2.5rem)]
             `}
         >
-            { chatList.map((chat) => <div>{ chat }</div>) }
+            {
+                chatList.map((chat) => {
+                    return (
+                        <div key={chat.toString()}>{ chat }</div>
+                    )
+                })
+            }
         </div>
     );
 };
