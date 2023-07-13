@@ -32,8 +32,8 @@ export const useChatting = create<chat>((set) => ({
 
 
 type ChatList = {
-    list: string[],
-    setList: (value: string) => void
+    list: String[],
+    setList: (value: String) => void
 }
 
 export const useChatList = create<ChatList>((set) => ({

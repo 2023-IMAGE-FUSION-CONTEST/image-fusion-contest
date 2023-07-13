@@ -2,19 +2,22 @@
 
 import {useChatList, useChatting} from "@/app/store/state";
 import {val} from "cheerio/lib/api/attributes";
+import {useState} from "react";
 
 export function ChatInput() {
-    const chat = useChatting();
+    const [loading, setLoading] = useState(false);
+    const [input, setInput] = useState("");
+    const [response, setResponse] = useState<String>("");
     const setChatList = useChatList(state => state.setList);
 
-    const prompt = `Q: ${chat.input}Generate a response with less than 100 characters.`
+    const prompt = `Q: ${input}Generate a response with less than 100 characters.`
 
     const generateResponse = async (e: any) => {
         e.preventDefault();
-        chat.setResponse("");
-        chat.setLoading(true);
+        setResponse("")
+        setLoading(true);
 
-        const response = await fetch("/api/generate", {
+        const res = await fetch("/api/generate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -22,11 +25,11 @@ export function ChatInput() {
             body: JSON.stringify({prompt,}),
         });
 
-        if (!response.ok) {
-            throw new Error(response.statusText);
+        if (!res.ok) {
+            throw new Error(res.statusText);
         }
 
-        const data = response.body;
+        const data = res.body;
 
         if (!data) {
             return
@@ -40,18 +43,19 @@ export function ChatInput() {
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
-            chat.setResponse(chunkValue);
+            setResponse((prev) => prev + chunkValue);
         }
-        // setChatList(chat.response);
-        chat.setLoading(false);
+        setChatList(response);
+        setLoading(false);
     }
+
     return (
         <div className="absolute left-0 bottom-0 flex">
             <input
                 className="w-60 h-12 px-5 text-sm focus:outline-none bg-gray-800 text-gray-100 placeholder-gray-400"
                 type="text"
                 placeholder="Type your message..."
-                onChange={e => chat.setInput(e.target.value)}
+                onChange={e => setInput(e.target.value)}
             />
             <button className="w-12 bg-fuchsia-700 text-2xl" onClick={e => generateResponse(e)}>
                 ▶
