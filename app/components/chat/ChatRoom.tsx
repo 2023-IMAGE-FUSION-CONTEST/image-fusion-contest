@@ -17,10 +17,12 @@ export default function ChatRoom() {
                 fixed
                 bottom-[10.5rem]
                 left-10
-                w-72
-                h-96
-                bg-gray-800
+                w-96
+                h-[36rem]
+                bg-[#1A1D25]
                 z-50
+                rounded-t-xl
+                drop-shadow-2xl
             `}
         >
             <Header />

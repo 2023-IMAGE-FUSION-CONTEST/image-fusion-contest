@@ -46,15 +46,16 @@ const Input = () => {
     }
 
     return (
-        <div className={`w-full h-12 flex`}>
-            <div className={`w-60 h-full`}>
-                <input
-                    className="w-full h-full px-5 text-sm focus:outline-none bg-gray-800 text-gray-100 placeholder-gray-400"
-                    type="text"
-                    placeholder="Type your message..."
-                    onChange={e => setInput(e.target.value)}
-                />
-            </div>
+        <div className={`w-full h-12 flex rounded-b-xl overflow-hidden bg-[#1A1D25] px-5 justify-center items-center border-t border-purple-700`}>
+            <input
+                className="w-full h-full text-sm bg-[#1A1D25] focus:outline-none text-gray-100 placeholder-gray-400"
+                type="text"
+                placeholder="Type your message..."
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") generateResponse(e);
+                }}
+            />
 
             <Button handleOnClick={generateResponse} />
         </div>
