@@ -107,13 +107,20 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.year_of_mfg !== "" && <div>{ data.year_of_mfg }</div>}
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
-                        <div className={`tracking-wide leading-relaxed text-[#a5a5a5]`}>{ !showMore ? description : data.description }</div>
+                        <div className={`tracking-wide leading-relaxed text-[#a4a4a4]`}>
+                            { !showMore ? description : data.description }
+                        </div>
 
-                        {viewMore && <button
-                            className="w-full h-8 bg-gray-800 text-white border-b-1 border-white hover:bg-gray-700 transition-colors duration-300 mt-2"
-                            onClick={handleReadMore}>
-                            {!showMore ? `View More` : `View Less`}
-                        </button>}
+                        {
+                            viewMore && (
+                                <button
+                                    className="w-full h-10 bg-gray-800 text-white border-b-1 border-white hover:bg-gray-700 transition-colors duration-300 mt-4 rounded-md"
+                                    onClick={handleReadMore}
+                                >
+                                    { !showMore ? `View More` : `View Less` }
+                                </button>
+                            )
+                        }
 
                         <ImageFusion baseImage={baseImage} imageUrl={`https://artbank.go.kr${data.image}`} />
                     </div>
