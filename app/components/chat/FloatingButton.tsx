@@ -1,11 +1,10 @@
-'use client'
+'use client';
 
-import ChatRoom from "@/app/components/chat/ChatRoom";
-import {useChatToggle} from "@/app/store/state";
+import { useChatToggle } from "@/app/store/state";
 import Image from "next/image";
 import chatIcon from "@/public/chat-svgrepo-com.svg";
 
-function ChatButton() {
+const FloatingButton = () => {
     const toggle = useChatToggle(state => state.change);
 
     return (
@@ -13,14 +12,6 @@ function ChatButton() {
             <Image src={chatIcon} alt={`aa`} height={30} width={30} />
         </button>
     )
-}
+};
 
-export default function Chat() {
-    const room = useChatToggle(state => state.toggle);
-    return (
-        <>
-            <ChatButton />
-            {room && <ChatRoom />}
-        </>
-    )
-}
+export default FloatingButton;

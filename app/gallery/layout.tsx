@@ -1,5 +1,6 @@
 import Input from "@/app/components/SearchInput";
-import Chat from "@/app/components/chat/Chat";
+import FloatingButton from "@/app/components/chat/FloatingButton";
+import ChatRoom from "@/app/components/chat/ChatRoom";
 
 export default function DashboardLayout({
     children,
@@ -9,8 +10,9 @@ export default function DashboardLayout({
     return (
         <div>
             <Input />
-            <Chat />
-            {children}
+            <FloatingButton />
+            <ChatRoom />
+            { children }
         </div>
     )
 }

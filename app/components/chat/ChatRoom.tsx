@@ -1,31 +1,31 @@
 'use client'
 
-import {ChatInput} from "@/app/components/chat/ChatInput";
-import {ChatHeader} from "@/app/components/chat/ChatHeader";
-import {useChatList} from "@/app/store/state";
-import {useEffect} from "react";
+import Header from "@/app/components/chat/header/Header";
+import Input from "@/app/components/chat/input/Input";
 
-
-function ChatBubble() {
-    return (
-        <div className="w-72 h-auto">
-            sadsdaffskjfskldfaslfjaslkjflskjflaskjdflskjflksfd;lasdkjf;laskjdf
-        </div>
-    )
-}
+import { useChatToggle } from "@/app/store/state";
+import ChatList from "@/app/components/chat/ChatList";
 
 export default function ChatRoom() {
-    const chatList = useChatList(state => state.list);
+    const room = useChatToggle(state => state.toggle);
 
-    useEffect(() => {
-        console.log(chatList);
-    }, [chatList]);
+    if (!room) return null;
 
     return (
-        <div className="fixed left-10 bottom-32 w-72 h-2/3 bg-blue-200 z-50 overflow-y-scroll overflow-x-hidden py-10">
-            <ChatHeader />
-            <ChatInput />
-            {chatList.map((ab) => <div>{ab}</div>)}
+        <div
+            className={`
+                fixed
+                bottom-[10.5rem]
+                left-10
+                w-72
+                h-96
+                bg-gray-800
+                z-50
+            `}
+        >
+            <Header />
+            <ChatList />
+            <Input />
         </div>
     )
 }

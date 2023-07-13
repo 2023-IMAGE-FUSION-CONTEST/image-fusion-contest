@@ -1,9 +1,10 @@
 'use client'
 
-import {useChatList, useChatting} from "@/app/store/state";
-import {useState} from "react";
+import { useState } from "react";
+import { useChatList } from "@/app/store/state";
+import Button from "@/app/components/chat/input/Button";
 
-export function ChatInput() {
+const Input = () => {
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState("");
     const setChatList = useChatList(state => state.setList);
@@ -45,17 +46,19 @@ export function ChatInput() {
     }
 
     return (
-        <div className="absolute left-0 bottom-0 flex">
-            <input
-                className="w-60 h-12 px-5 text-sm focus:outline-none bg-gray-800 text-gray-100 placeholder-gray-400"
-                type="text"
-                placeholder="Type your message..."
-                onChange={e => setInput(e.target.value)}
-            />
-            <button className="w-12 bg-fuchsia-700 text-2xl" onClick={e => generateResponse(e)}>
-                ▶
-            </button>
+        <div className={`w-full h-12 flex`}>
+            <div className={`w-60 h-full`}>
+                <input
+                    className="w-full h-full px-5 text-sm focus:outline-none bg-gray-800 text-gray-100 placeholder-gray-400"
+                    type="text"
+                    placeholder="Type your message..."
+                    onChange={e => setInput(e.target.value)}
+                />
+            </div>
+
+            <Button handleOnClick={generateResponse} />
         </div>
     )
-}
+};
 
+export default Input;
