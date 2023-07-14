@@ -18,7 +18,7 @@ export default function ChatRoom() {
                 bottom-[10.5rem]
                 left-10
                 w-96
-                h-[36rem]
+                h-[70%]
                 bg-[#1A1D25]
                 z-50
                 rounded-t-xl

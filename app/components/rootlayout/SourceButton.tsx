@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from 'next/link';
-import {menu, bg} from "@/app/colos";
+import {menu, bg} from "@/app/colors";
 
 
 function Menu() {

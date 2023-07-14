@@ -25,13 +25,45 @@ const ChatList = () => {
                 scrollbar-hide
                 px-4
                 text-white
+                flex
+                flex-col
+                gap-4
+                text-base
             `}
         >
             {
-                chatList.map((chat) => {
-                    return (
-                        <div key={chat.toString()}>{ chat }</div>
-                    )
+                chatList.map((chat, index) => {
+                    if (chat.role === 'assistant') {
+                        return (
+                            <div
+                                key={ chat.content + index }
+                                className={`
+                                p-4
+                                bg-zinc-500
+                                rounded-xl
+                                max-w-[18rem]
+                            `}
+                            >
+                                { chat.content }
+                            </div>
+                        )
+                    } else if (chat.role === 'user') {
+                        return (
+                            <div
+                                key={ chat.content + index }
+                                className={`
+                                self-end
+                                py-2
+                                px-4
+                                bg-[#372FEB]
+                                rounded-3xl
+                                max-w-[18rem]
+                            `}
+                            >
+                                { chat.content }
+                            </div>
+                        )
+                    }
                 })
             }
         </div>
