@@ -3,11 +3,6 @@
 import { useChat, useChatList } from "@/app/store/state";
 import { useEffect, useRef } from "react";
 
-/*
-TODO: 엔터로 채팅 입력 시 가끔 두번 입력되는 문제 해결
-TODO: AI가 채팅 입력 시 "..."등의 채팅 추가
- */
-
 const ChatList = () => {
     const chatListRef = useRef<HTMLDivElement>(null);
     const chatList = useChatList(state => state.list);
