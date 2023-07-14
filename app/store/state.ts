@@ -1,14 +1,28 @@
 import { create } from "zustand";
 import { ChatGPTMessage } from "@/utils/openAiStream";
 
-type MyStore = {
+type ChatRoomVisible = {
     toggle: boolean;
     change: () => void;
 };
 
-export const useChatToggle = create<MyStore>((set) => ({
+export const useChatToggle = create<ChatRoomVisible>((set) => ({
     toggle: false,
-    change: () => set((state) => ({toggle: !state.toggle}))
+    change: () => set((state) => ({ toggle: !state.toggle }))
+}))
+
+type Chat = {
+    input: string;
+    setInput: (value: string) => void;
+    AITyping: boolean;
+    setAITyping: (value: boolean) => void;
+}
+
+export const useChat = create<Chat>((set) => ({
+    input: "",
+    setInput: (value) => set({ input: value }),
+    AITyping: false,
+    setAITyping: (value) => set({ AITyping: value }),
 }))
 
 type ChatList = {
@@ -19,7 +33,7 @@ type ChatList = {
 
 export const useChatList = create<ChatList>((set) => ({
     list: [],
-    setList: value => set(state => ({ list: [...state.list, value] })),
+    setList: value => set((state) => ({ list: [...state.list, value] })),
     reset: (value) => set({
         list: [
             { role: "system", content: "너는 작품에 대한 정보를 받고 해당 작품에 대한 설명과 사용자의 질문에 대한 답변과 대화를 해주는 AI야." },

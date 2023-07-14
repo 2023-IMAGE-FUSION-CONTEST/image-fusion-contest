@@ -1,6 +1,6 @@
 'use client'
 
-import { useChatList } from "@/app/store/state";
+import { useChat, useChatList } from "@/app/store/state";
 import { useEffect, useRef } from "react";
 
 /*
@@ -11,6 +11,7 @@ TODO: AI가 채팅 입력 시 "..."등의 채팅 추가
 const ChatList = () => {
     const chatListRef = useRef<HTMLDivElement>(null);
     const chatList = useChatList(state => state.list);
+    const AITyping = useChat(state => state.AITyping);
 
     useEffect(() => {
         // chatListRef가 스크롤의 맨 아래에 위치하도록 설정
@@ -43,11 +44,16 @@ const ChatList = () => {
                             <div
                                 key={ chat.content + index }
                                 className={`
-                                p-4
-                                bg-zinc-500
-                                rounded-xl
-                                max-w-[18rem]
-                            `}
+                                    self-start
+                                    inline-block
+                                    py-2
+                                    px-4
+                                    bg-zinc-700
+                                    rounded-3xl
+                                    max-w-[18rem]
+                                    first:mt-4
+                                    last:mb-4
+                                `}
                             >
                                 { chat.content }
                             </div>
@@ -58,11 +64,14 @@ const ChatList = () => {
                                 key={ chat.content + index }
                                 className={`
                                 self-end
+                                inline-block
                                 py-2
                                 px-4
                                 bg-[#372FEB]
                                 rounded-3xl
                                 max-w-[18rem]
+                                first:mt-4
+                                last:mb-4
                             `}
                             >
                                 { chat.content }
@@ -70,6 +79,25 @@ const ChatList = () => {
                         )
                     }
                 })
+            }
+
+            {
+                AITyping &&
+                <div
+                    className={`
+                        self-start
+                        inline-block
+                        py-2
+                        px-4
+                        bg-zinc-700
+                        rounded-3xl
+                        max-w-[18rem]
+                        first:mt-4
+                        last:mb-4
+                    `}
+                >
+                    <div className="animate-pulse"> • • • </div>
+                </div>
             }
         </div>
     );
