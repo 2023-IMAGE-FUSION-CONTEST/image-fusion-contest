@@ -1,47 +1,28 @@
 'use client'
 
-import { useState } from "react";
-import { useChatList, useImageDetail } from "@/app/store/state";
+import {useChat, useChatList} from "@/app/store/state";
 import Button from "@/app/components/chat/input/Button";
-import {responseParse} from "@/utils/sessionStorage";
 
 const Input = () => {
-    const [loading, setLoading] = useState(false);
-    const [input, setInput] = useState("");
+    const input = useChat(state => state.input);
+    const setInput = useChat(state => state.setInput);
+    const setAITyping = useChat(state => state.setAITyping);
+    const chatList = useChatList(state => state.list);
     const setChatList = useChatList(state => state.setList);
-    const imageDetail = useImageDetail(state => state.description);
-    const imageAuthor = useImageDetail(state => state.author);
 
-    const prompt = `
-    Your role as an AI is to provide answers to questions related to an image that I provide.
-    Sentences that start with "D:" are descriptions of the image, while sentences that start with "Q:" are user's questions.
-    Sentences that start with "R:" are records of the previous chats, formatted as [Q: Question A: Answer]. 
-    These reference previous conversations, and if it's empty, it implies that it's the first conversation.
+    const generateResponse = () => {
+        if (!input) return;
 
-        D: ${imageDetail}, author: ${imageAuthor}
-        Q: ${input}
-        R: ${sessionStorage.getItem("before")}
-        
-    Your goal is to provide answers to the user's current questions related to the image, based on the previous chat. If you know additional information that's not included in the description, explain it.
-    After providing an answer, mark with "<>==<>" and summarize the question and answer in the format "Q: Question A: Answer".
-
-    For example, for a question like "D: Description of the image... Q: Question about the image... A: Answer about the image...", the response should be something like "My thoughts on the given image and question are...".
-    Avoid repeating sentences starting with "D:", "Q:", "R:".
-
-Responses should be provided in Korean.
-    `
-
-
-    const generateResponse = (e: any) => {
-        e.preventDefault();
-        setLoading(true);
+        setAITyping(true);
+        setInput("");
+        setChatList({ role: "user", content: input });
 
         fetch("/api/generate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({prompt,}),
+            body: JSON.stringify({ prompt: [...chatList, { role: "user", content: input }] }),
         })
             .then(async (res) => {
                 if (!res.ok) throw new Error(res.statusText);
@@ -60,9 +41,9 @@ Responses should be provided in Korean.
                     const chunkValue = decoder.decode(value);
                     response += chunkValue;
                 }
-                response = responseParse(response);
-                setChatList(response);
-                setLoading(false);
+
+                setChatList({ role: "assistant", content: response });
+                setAITyping(false);
             });
     }
 
@@ -72,13 +53,15 @@ Responses should be provided in Korean.
                 className="w-full h-full text-sm bg-[#1A1D25] focus:outline-none text-gray-100 placeholder-gray-400"
                 type="text"
                 placeholder="Type your message..."
+                value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={(e) => {
-                    if (e.key === "Enter") generateResponse(e);
+                    if (e.nativeEvent.isComposing) return;
+                    if (e.key === "Enter") generateResponse();
                 }}
             />
 
-            <Button handleOnClick={generateResponse} />
+            <Button handleOnClick={() => generateResponse()} />
         </div>
     )
 };

@@ -1,5 +1,6 @@
 import { ArtworkType } from "@/types/ArtworkType";
 import Image from "next/image";
+import { useSelectedArtwork } from "@/app/store/state";
 
 interface ArtworkProps {
     data: ArtworkType,
@@ -7,10 +8,12 @@ interface ArtworkProps {
 }
 
 const Artwork = ({ data, setSelected }: ArtworkProps) => {
+    const s = useSelectedArtwork(state => state.setSelected);
     return (
         <div
             className={`relative inline-block mb-2 group`}
             onClick={() => {
+                s(true);
                 setSelected(data);
             }}
         >

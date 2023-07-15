@@ -5,6 +5,7 @@ import { ArtworkType } from "@/types/ArtworkType";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useSearchParams, usePathname } from "next/navigation";
+import {useChatToggle, useSelectedArtwork} from "@/app/store/state";
 const ImageDetail = dynamic(() => import("@/app/components/ImageDetail"));
 
 interface ArtworkGridProps {
@@ -14,42 +15,14 @@ interface ArtworkGridProps {
 const ArtworkGrid = ({ data }: ArtworkGridProps) => {
     const pathName = usePathname();
     const params = useSearchParams();
-    const [selected, setSelected] = useState<ArtworkType>(
-        {
-            id: 0,
-            title: "",
-            description: "",
-            author: "",
-            type: "",
-            year_of_mfg: "",
-            url: "",
-            image: "",
-            imageSize: {
-                width: 0,
-                height: 0
-            },
-            blurDataURL: ""
-        }
-    );
+    const setSelectedArtwork = useSelectedArtwork(state => state.setSelectedArtwork);
+    const resetSelectedArtwork = useSelectedArtwork(state => state.reset);
+    const selected = useSelectedArtwork(state => state.selected);
+    const resetChatVisible = useChatToggle(state => state.reset);
 
     useEffect(() => {
-        setSelected(
-            {
-                id: 0,
-                title: "",
-                description: "",
-                author: "",
-                type: "",
-                year_of_mfg: "",
-                url: "",
-                image: "",
-                imageSize: {
-                    width: 0,
-                    height: 0
-                },
-                blurDataURL: ""
-            }
-        );
+        resetSelectedArtwork();
+        resetChatVisible();
     }, [pathName, params]);
 
     return (
@@ -58,14 +31,13 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
                 {
                     data.map((item) => {
                         return (
-                            <Artwork key={item.id} data={item} setSelected={setSelected} />
+                            <Artwork key={item.id} data={item} setSelected={setSelectedArtwork} />
                         )
                     })
                 }
             </div>
             {
-                (selected && selected.url !== "") &&
-                <ImageDetail data={selected} setSelected={setSelected} />
+                selected && <ImageDetail />
             }
         </>
     );

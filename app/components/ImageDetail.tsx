@@ -1,62 +1,27 @@
 'use client';
 
 import { useEffect, useRef, useState } from "react";
-import { ArtworkType } from "@/types/ArtworkType";
 import Image from "next/image";
 import Link from "next/link";
 import ImageFusion from "@/app/components/ImageFusion";
 import { getBase64Image } from "@/utils/getBase54Image";
-import { menu, subText, text } from "@/app/colos";
-import {useImageDetail} from "@/app/store/state";
+import { menu } from "@/app/colors";
+import {useChatList, useChatToggle, useSelectedArtwork} from "@/app/store/state";
 
-
-interface ImageDetailProps {
-    data: ArtworkType,
-    setSelected: any
-}
-
-const closeSelected = {
-    id: 0,
-    title: "",
-    description: "",
-    author: "",
-    type: "",
-    year_of_mfg: "",
-    url: "",
-    image: "",
-    imageSize: {
-        width: 0,
-        height: 0
-    },
-    blurDataURL: ""
-}
-
-
-const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
+const ImageDetail = () => {
+    const descriptionRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const [baseImage, setBaseImage] = useState<string | null | undefined>(null);
 
-    const [showMore, setShowMore] = useState(false);
     const [viewMore, setViewMore] = useState(false);
-    const [description, setDescription] = useState(
-        data.description.length > 200 ? `${data.description.substring(0, 160)}...` : data.description
-    );
-    const setImageDetail = useImageDetail(state => state.setDescription);
-    const setImageAuthor = useImageDetail(state => state.setAuthor);
 
-
-    const handleReadMore = () => {
-        setShowMore(!showMore);
-    }
+    const resetChatList = useChatList(state => state.reset);
+    const data = useSelectedArtwork();
+    const resetChatVisible = useChatToggle(state => state.reset);
 
     useEffect(() => {
-        const text = data.description.length > 100 ? `${data.description.substring(0, 100)}...` : data.description;
-        setImageDetail(data.description);
-        setImageAuthor(data.author);
-        setViewMore(text.length > 100);
-        setDescription(text);
-        setShowMore(false);
-    }, [data.description])
+        resetChatList(`작가 : ${data.author}, 작품명: ${data.title}, 제작년도: ${data.year_of_mfg}, 화풍: ${data.type}, 작품설명: ${data.description}`);
+    }, [data])
 
     useEffect(() => {
         if (imageRef.current) {
@@ -95,7 +60,8 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                     </Link>
                     <div
                         onClick={() => {
-                            setSelected(closeSelected);
+                            data.reset();
+                            resetChatVisible();
                         }}
                         className="hover:bg-white hover:bg-opacity-30 cursor-pointer"
                     >
@@ -115,17 +81,39 @@ const ImageDetail = ({ data, setSelected }: ImageDetailProps) => {
                             { data.year_of_mfg !== "" && <div>{ data.year_of_mfg }</div>}
                             { data.type !== "" && <div>{ data.type }</div> }
                         </div>
-                        <div className={`tracking-wide leading-relaxed text-[#a4a4a4]`}>
-                            { !showMore ? description : data.description }
+                        <div
+                            ref={descriptionRef}
+                            className={`
+                                tracking-wide
+                                leading-relaxed
+                                text-[#a4a4a4]
+                                ${viewMore ? `h-auto` : `h-20`}
+                                overflow-hidden
+                            `}
+                        >
+                            { data.description }
                         </div>
 
                         {
-                            viewMore && (
+                            descriptionRef && descriptionRef.current && descriptionRef.current?.scrollHeight > 80 && (
                                 <button
-                                    className="w-full h-10 bg-gray-800 text-white border-b-1 border-white hover:bg-gray-700 transition-colors duration-300 mt-4 rounded-md"
-                                    onClick={handleReadMore}
+                                    className={`
+                                        w-full
+                                        h-10
+                                        bg-gray-800
+                                        text-white
+                                        border-b-1
+                                        border-white
+                                        hover:bg-gray-700
+                                        transition-colors
+                                        duration-300
+                                        mt-4
+                                        rounded-md
+                                        cursor-pointer
+                                    `}
+                                    onClick={() => setViewMore(!viewMore)}
                                 >
-                                    { !showMore ? `View More` : `View Less` }
+                                    { !viewMore ? `View More` : `View Less` }
                                 </button>
                             )
                         }
