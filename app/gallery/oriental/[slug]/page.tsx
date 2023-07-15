@@ -2,8 +2,6 @@ import ArtworkGrid from "@/app/components/ArtworkGrid";
 import Pagination from "@/app/components/Pagination";
 import { getArtworkCount, getArtworks } from "@/utils/getArtworks";
 
-export const dynamic = "force-static";
-
 export const generateStaticParams = async () => {
     const count = await getArtworkCount("한국화");
     const pages = Math.ceil(count / 50);
