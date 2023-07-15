@@ -1,14 +1,71 @@
 import { create } from "zustand";
 import { ChatGPTMessage } from "@/utils/openAiStream";
 
+type SelectedArtwork = {
+    id: number;
+    title: string;
+    description: string;
+    author: string;
+    type: string;
+    year_of_mfg: string;
+    url: string;
+    image: string;
+    imageSize: {
+        width: number;
+        height: number;
+    };
+    blurDataURL: string;
+    setSelectedArtwork: (value: SelectedArtwork) => void;
+    reset: () => void;
+    selected: boolean;
+    setSelected: (value: boolean) => void;
+};
+
+export const useSelectedArtwork = create<SelectedArtwork>((set, get) => ({
+    id: 0,
+    title: "",
+    description: "",
+    author: "",
+    type: "",
+    year_of_mfg: "",
+    url: "",
+    image: "",
+    imageSize: {
+        width: 0,
+        height: 0,
+    },
+    blurDataURL: "",
+    setSelectedArtwork: (value) => set(value),
+    reset: () => set({
+        id: 0,
+        title: "",
+        description: "",
+        author: "",
+        type: "",
+        year_of_mfg: "",
+        url: "",
+        image: "",
+        imageSize: {
+            width: 0,
+            height: 0,
+        },
+        blurDataURL: "",
+        selected: false,
+    }),
+    selected: false,
+    setSelected: (value) => set({ selected: value }),
+}));
+
 type ChatRoomVisible = {
     toggle: boolean;
     change: () => void;
+    reset: () => void;
 };
 
 export const useChatToggle = create<ChatRoomVisible>((set) => ({
     toggle: false,
-    change: () => set((state) => ({ toggle: !state.toggle }))
+    change: () => set((state) => ({ toggle: !state.toggle })),
+    reset: () => set({ toggle: false }),
 }))
 
 type Chat = {
