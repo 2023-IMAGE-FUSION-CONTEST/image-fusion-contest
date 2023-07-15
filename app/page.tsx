@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from "next/link";
 
 interface ImageLinkProps {
     href: string;
@@ -11,7 +10,7 @@ function ImageLink({ href, src, alt }: ImageLinkProps) {
     const commonClasses = "absolute w-full flex justify-center";
 
     return (
-        <Link href={href} className={`flex-1 relative group`}>
+        <a href={href} className={`flex-1 relative group`}>
             <Image
                 src={src}
                 alt={alt}
@@ -26,7 +25,7 @@ function ImageLink({ href, src, alt }: ImageLinkProps) {
                     { alt }
                 </p>
             </div>
-        </Link>
+        </a>
     )
 }
 
