@@ -1,25 +1,7 @@
 import { create } from "zustand";
 import { ChatGPTMessage } from "@/utils/openAiStream";
+import {Chat, ChatList, ChatRoomVisible, SelectedArtwork, SelectedAvatar} from "@/typings";
 
-type SelectedArtwork = {
-    id: number;
-    title: string;
-    description: string;
-    author: string;
-    type: string;
-    year_of_mfg: string;
-    url: string;
-    image: string;
-    imageSize: {
-        width: number;
-        height: number;
-    };
-    blurDataURL: string;
-    setSelectedArtwork: (value: SelectedArtwork) => void;
-    reset: () => void;
-    selected: boolean;
-    setSelected: (value: boolean) => void;
-};
 
 export const useSelectedArtwork = create<SelectedArtwork>((set, get) => ({
     id: 0,
@@ -56,11 +38,7 @@ export const useSelectedArtwork = create<SelectedArtwork>((set, get) => ({
     setSelected: (value) => set({ selected: value }),
 }));
 
-type ChatRoomVisible = {
-    toggle: boolean;
-    change: () => void;
-    reset: () => void;
-};
+
 
 export const useChatToggle = create<ChatRoomVisible>((set) => ({
     toggle: false,
@@ -68,12 +46,6 @@ export const useChatToggle = create<ChatRoomVisible>((set) => ({
     reset: () => set({ toggle: false }),
 }))
 
-type Chat = {
-    input: string;
-    setInput: (value: string) => void;
-    AITyping: boolean;
-    setAITyping: (value: boolean) => void;
-}
 
 export const useChat = create<Chat>((set) => ({
     input: "",
@@ -82,11 +54,7 @@ export const useChat = create<Chat>((set) => ({
     setAITyping: (value) => set({ AITyping: value }),
 }))
 
-type ChatList = {
-    list: ChatGPTMessage[];
-    setList: (value: ChatGPTMessage) => void,
-    reset: (value: string) => void,
-}
+
 
 export const useChatList = create<ChatList>((set) => ({
     list: [],
@@ -98,4 +66,10 @@ export const useChatList = create<ChatList>((set) => ({
             { role: "system", content: `너가 알려주고 대화해주어야 할 작품에 대한 정보는 다음과 같아 ${value}` },
         ]
     })
+}))
+
+
+export const useSelectedAvatar = create<SelectedAvatar>((set) => ({
+    onSelected: false,
+    change: () => set((state) => ({ onSelected: !state.onSelected })),
 }))
