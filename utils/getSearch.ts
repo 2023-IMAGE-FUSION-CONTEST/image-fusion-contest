@@ -64,6 +64,9 @@ export const getSearch = cache(async (query: string | string[] | undefined) => {
                         .replace("oriental", "한국화")
                         .replace("western", "서양화")
                         .replace("동양", "한국")
+                        .replace("calligraphy", "서예")
+                        .replace("culture", "문인화")
+                        .replace("engraving", "판화")
                 }
             }))
         });

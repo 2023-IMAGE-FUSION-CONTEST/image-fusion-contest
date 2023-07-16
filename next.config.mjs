@@ -43,6 +43,17 @@ const nextConfig = {
             },
             {
                 source: "/gallery/western",
+                has: [
+                    {
+                        type: "query",
+                        key: "page",
+                        value: "(?<page>.*)"
+                    }
+                ],
+                destination: "/gallery/western/:page",
+            },
+            {
+                source: "/gallery/western",
                 missing: [
                     {
                         type: "query",
@@ -50,6 +61,17 @@ const nextConfig = {
                     }
                 ],
                 destination: "/gallery/western/1",
+            },
+            {
+                source: "/gallery/culture",
+                has: [
+                    {
+                        type: "query",
+                        key: "page",
+                        value: "(?<page>.*)"
+                    }
+                ],
+                destination: "/gallery/culture/:page",
             },
             {
                 source: "/gallery/culture",
@@ -63,6 +85,17 @@ const nextConfig = {
             },
             {
                 source: "/gallery/engraving",
+                has: [
+                    {
+                        type: "query",
+                        key: "page",
+                        value: "(?<page>.*)"
+                    }
+                ],
+                destination: "/gallery/engraving/:page",
+            },
+            {
+                source: "/gallery/engraving",
                 missing: [
                     {
                         type: "query",
@@ -70,6 +103,17 @@ const nextConfig = {
                     }
                 ],
                 destination: "/gallery/engraving/1",
+            },
+            {
+                source: "/gallery/calligraphy",
+                has: [
+                    {
+                        type: "query",
+                        key: "page",
+                        value: "(?<page>.*)"
+                    }
+                ],
+                destination: "/gallery/calligraphy/:page",
             },
             {
                 source: "/gallery/calligraphy",

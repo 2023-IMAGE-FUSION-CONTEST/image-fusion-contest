@@ -1,9 +1,8 @@
 'use client'
 
-import Link from "next/link";
 import { Anton } from 'next/font/google';
-import {useEffect, useState} from "react";
-import {usePathname, useRouter} from "next/navigation";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 const anton = Anton({
     weight: ['400'],
@@ -18,8 +17,6 @@ function Title() {
     useEffect(() => {
         if (pathName === '/gallery/western') {
             setTitle('Western')
-        } else if (pathName === '/gallery/museum') {
-            setTitle('Museum')
         } else if (pathName === '/gallery/search') {
             setTitle('Search')
         } else if (pathName === '/gallery/oriental') {
@@ -28,7 +25,7 @@ function Title() {
             setTitle('Calligraphy')
         } else if (pathName === '/gallery/engraving') {
             setTitle('Engraving')
-        } else {
+        } else if (pathName === '/gallery/culture') {
             setTitle('Culture')
         }
 }, [pathName]);
@@ -55,8 +52,16 @@ export default function Input() {
 
             if (!input.includes(":")) input = `title:${input}`;
 
-            const query = `?query=${(paintingType === "western" || paintingType === "oriental") ? `painting:${paintingType}+` : ``}${input.split(' ').join('+')}`;
-            router.push(`/gallery/search${query}`);
+            let query: string;
+            if (paintingType === "western" || paintingType === "oriental" || paintingType === "calligraphy" || paintingType === "culture" || paintingType === "engraving") {
+                query = `?query=painting:${paintingType}+${input.split(' ').join('+')}`;
+                router.push(`/gallery/search${query}`);
+                return;
+            } else {
+                query = `?query=${input.split(' ').join('+')}`;
+                router.push(`/gallery/search${query}`);
+                return;
+            }
         }
     }
 

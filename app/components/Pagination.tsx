@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
-type PaginationType = "oriental" | "western";
+type PaginationType = "oriental" | "western" | "calligraphy" | "culture" | "engraving";
 
 interface PaginationProps {
     type: PaginationType,
