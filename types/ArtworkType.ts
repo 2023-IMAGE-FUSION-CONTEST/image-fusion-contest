@@ -3,7 +3,7 @@ export interface ArtworkType {
     title: string,
     description: string,
     year_of_mfg: string,
-    type: "oriental" | "western" | "",
+    type: "oriental" | "western" | "calligraphy" | "culture" | "engraving" | "",
     author: string,
     url: string,
     image: string,

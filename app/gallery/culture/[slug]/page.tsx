@@ -20,7 +20,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <div className={`px-10 py-8`}>
             {/* @ts-ignore */}
             <ArtworkGrid data={data} />
-            <Pagination type={"oriental"} count={count} />
+            <Pagination type={"culture"} count={count} />
         </div>
     );
 };
