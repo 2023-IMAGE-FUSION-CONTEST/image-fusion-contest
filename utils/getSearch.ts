@@ -2,7 +2,6 @@ import { cache } from "react";
 import { prisma } from "@/utils/prisma";
 import { getPlaiceholder } from "plaiceholder";
 
-
 const parseParams = (str: string) => {
     const result: any = {
         painting: [],
