@@ -29,7 +29,7 @@ function Header() {
     return (
         <nav className="absolute left-0 top-0 z-10 w-full flex justify-between bg-transparent py-2 px-10">
             <Logo />
-            <div className="flex items-center font-bold">
+            <div className="flex items-center font-bold gap-4">
                 <Link href={'https://github.com/2023-IMAGE-FUSION-CONTEST'} className={`${bigBtnOption}`} target="_blank">
                     <div>
                         <svg fill="white" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className={`w-10 h-10`}>
