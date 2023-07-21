@@ -3,28 +3,18 @@
 import Header from "@/app/components/chat/header/Header";
 import Input from "@/app/components/chat/input/Input";
 
-import { useChatToggle } from "@/app/store/state";
+import {useChatToggle, useSelectedAvatar} from "@/app/store/state";
 import ChatList from "@/app/components/chat/ChatList";
+import Avatar from "@/app/components/chat/header/Avatar";
 
 export default function ChatRoom() {
     const room = useChatToggle(state => state.toggle);
-
+    const avatar = useSelectedAvatar(state => state.onSelected);
     if (!room) return null;
 
     return (
-        <div
-            className={`
-                fixed
-                bottom-[10.5rem]
-                left-10
-                w-96
-                h-[70%]
-                bg-[#1A1D25]
-                z-50
-                rounded-t-xl
-                drop-shadow-2xl
-            `}
-        >
+        <div className="fixed left-12 bottom-32 flex flex-col z-50">
+            {avatar && <Avatar/>}
             <Header />
             <ChatList />
             <Input />
