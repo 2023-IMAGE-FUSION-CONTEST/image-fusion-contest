@@ -20,7 +20,7 @@ const ImageDetail = () => {
     const resetChatVisible = useChatToggle(state => state.reset);
 
     useEffect(() => {
-        resetChatList(`작가 : ${data.author}, 작품명: ${data.title}, 제작년도: ${data.year_of_mfg}, 화풍: ${data.type}, 작품설명: ${data.description}`);
+        resetChatList(`${data.author}|${data.title}|${data.year_of_mfg}|${data.type}|${data.description}|https://artbank.go.kr${data.image}`);
     }, [data])
 
     useEffect(() => {

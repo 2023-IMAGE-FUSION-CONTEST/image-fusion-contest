@@ -1,6 +1,6 @@
-import { cache } from "react";
-import { prisma } from "@/utils/prisma";
-import { getPlaiceholder } from "plaiceholder";
+import {cache} from "react";
+import {prisma} from "@/utils/prisma";
+import {getPlaiceholder} from "plaiceholder";
 
 const parseParams = (str: string) => {
     const result: any = {
@@ -89,29 +89,25 @@ export const getSearch = cache(async (query: string | string[] | undefined) => {
         });
     }
 
-    const data = await prisma.artwork.findMany({
+    return await prisma.artwork.findMany({
         where: dbQuery,
     }).then(async (res) => {
-        const response = await Promise.all(
+        return await Promise.all(
             res.map(async (item) => {
                 const src = `https://artbank.go.kr${item.image}`;
 
-                const buffer = await fetch(src)
+                const buffer = await fetch(src, {cache: "no-cache"})
                     .then(async (res) => {
                         return Buffer.from(await res.arrayBuffer());
                     });
 
-                const { base64, metadata} = await getPlaiceholder(buffer);
+                const {base64, metadata} = await getPlaiceholder(buffer);
                 return {
                     ...item,
                     blurDataURL: base64,
                     imageSize: { width: metadata.width, height: metadata.height }
                 }
             })
-        )
-
-        return response;
+        );
     });
-
-    return data;
 });

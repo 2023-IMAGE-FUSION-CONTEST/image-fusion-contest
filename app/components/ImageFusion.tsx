@@ -94,7 +94,7 @@ const ImageFusion = ({ baseImage, imageUrl }: { baseImage: string | null | undef
             ]
         };
 
-        fetch("https://port-0-image-fusion-contest-backend-7xwyjq992lljjt5bow.sel4.cloudtype.app/api/image-fusion", {
+        fetch("/api/image-fusion", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

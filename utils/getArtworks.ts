@@ -2,7 +2,6 @@ import { cache } from "react";
 import { prisma } from "@/utils/prisma";
 import { getPlaiceholder } from "plaiceholder";
 import { PaintingType } from "@/types/ArtworkType";
-import "server-only";
 
 export const getArtworks = cache(async (page: number, type: PaintingType) => {
     const data = await prisma.artwork.findMany({

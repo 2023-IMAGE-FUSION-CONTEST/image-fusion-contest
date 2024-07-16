@@ -17,9 +17,7 @@ const Pagination = ({ type, count }: PaginationProps) => {
     const [display, setDisplay] = useState<Array<number>>([]);
 
     useEffect(() => {
-        let temp: number[] = Array.from({ length: 5 }, (_, i) => (i + (Math.floor((nowPage - 1) / 5) * 5)) + 1);
-        temp = temp.filter((item) => item <= Math.ceil(count / 50));
-        setDisplay(temp);
+        setDisplay(Array.from({ length: 5 }, (_, i) => (i + (Math.floor((nowPage - 1) / 5) * 5)) + 1).filter((item) => item <= Math.ceil(count / 50)));
     }, [nowPage, count, type]);
 
     return (

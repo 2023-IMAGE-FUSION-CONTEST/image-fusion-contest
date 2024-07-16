@@ -1,11 +1,13 @@
 'use client';
 
-import Artwork from "@/app/components/Artwork";
-import { ArtworkType } from "@/types/ArtworkType";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
-import { useSearchParams, usePathname } from "next/navigation";
-import {useChatToggle, useSelectedArtwork} from "@/app/store/state";
+
+import { useChatToggle, useSelectedArtwork } from "@/app/store/state";
+
+import { ArtworkType } from "@/types/ArtworkType";
+
+import Artwork from "@/app/components/Artwork";
 const ImageDetail = dynamic(() => import("@/app/components/ImageDetail"));
 
 interface ArtworkGridProps {
@@ -13,8 +15,6 @@ interface ArtworkGridProps {
 }
 
 const ArtworkGrid = ({ data }: ArtworkGridProps) => {
-    const pathName = usePathname();
-    const params = useSearchParams();
     const setSelectedArtwork = useSelectedArtwork(state => state.setSelectedArtwork);
     const resetSelectedArtwork = useSelectedArtwork(state => state.reset);
     const selected = useSelectedArtwork(state => state.selected);
@@ -23,7 +23,7 @@ const ArtworkGrid = ({ data }: ArtworkGridProps) => {
     useEffect(() => {
         resetSelectedArtwork();
         resetChatVisible();
-    }, [pathName, params]);
+    }, [data]);
 
     return (
         <>

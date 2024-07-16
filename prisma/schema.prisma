@@ -2,21 +2,25 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-	provider = "prisma-client-js"
+  provider         = "prisma-client-js"
+  output           = "./"
+  previewFeactures = ["relationMode"]
+  binaryTargets    = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 datasource db {
-	provider = "mysql"
-	url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Artwork {
-	id          Int    @id @default(autoincrement())
-	title       String
-	author      String
-	year_of_mfg String
-	type        String
-	description String @db.LongText
-	url         String
-	image       String
+  id          Int    @id @default(autoincrement())
+  title       String
+  author      String
+  year_of_mfg String
+  type        String
+  description String @db.LongText
+  url         String
+  image       String
 }

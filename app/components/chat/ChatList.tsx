@@ -48,10 +48,10 @@ const ChatList = () => {
                                     max-w-[18rem]
                                     first:mt-4
                                     last:mb-4
+                                    break-all
                                 `}
-                            >
-                                { chat.content }
-                            </div>
+                                dangerouslySetInnerHTML={{ __html: chat.content }}
+                            />
                         )
                     } else if (chat.role === 'user') {
                         return (
@@ -67,6 +67,7 @@ const ChatList = () => {
                                 max-w-[18rem]
                                 first:mt-4
                                 last:mb-4
+                                break-all
                             `}
                             >
                                 { chat.content }

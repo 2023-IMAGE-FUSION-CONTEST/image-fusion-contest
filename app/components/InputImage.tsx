@@ -1,3 +1,5 @@
+import React from "react";
+
 interface Props {
     image: string | ArrayBuffer | null,
     setImage: any
