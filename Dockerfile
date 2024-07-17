@@ -45,7 +45,7 @@ COPY --from=deps /app/.pnp.cjs /app/.pnp.loader.mjs /app/package.json  ./
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-RUN yarn global add pm2
+RUN npm install pm2 -g
 
 USER nextjs
 
