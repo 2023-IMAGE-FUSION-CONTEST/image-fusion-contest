@@ -5,7 +5,7 @@ import { PaintingType } from "@/types/ArtworkType";
 import "server-only";
 
 export const getArtworks = cache(async (page: number, type: PaintingType) => {
-    const data = await prisma.artwork.findMany({
+    const res = await prisma.artwork.findMany({
         where: {
             type: type,
             image: {
@@ -17,29 +17,27 @@ export const getArtworks = cache(async (page: number, type: PaintingType) => {
         // 범위
         skip: (page - 1) * 50,
         take: 50,
-    }).then(async (res) => {
-        const response = await Promise.all(
-            res.map(async (item) => {
-                const src = `https://artbank.go.kr${item.image}`;
-
-                const buffer = await fetch(src)
-                    .then(async (res) => {
-                        return Buffer.from(await res.arrayBuffer());
-                    });
-
-                const { base64, metadata} = await getPlaiceholder(buffer);
-                return {
-                    ...item,
-                    blurDataURL: base64,
-                    imageSize: { width: metadata.width, height: metadata.height }
-                }
-            })
-        )
-
-        return response;
     });
 
-    return data;
+    const response = await Promise.all(
+        res.map(async (item) => {
+            const src = `https://artbank.go.kr${item.image}`;
+
+            const buffer = await fetch(src)
+                .then(async (res) => {
+                    return Buffer.from(await res.arrayBuffer());
+                });
+
+            const { base64, metadata } = await getPlaiceholder(buffer);
+            return {
+                ...item,
+                blurDataURL: base64,
+                imageSize: { width: metadata.width, height: metadata.height }
+            }
+        })
+    );
+
+    return response;
 });
 
 export const getArtworkCount = cache(async (type: PaintingType) => {

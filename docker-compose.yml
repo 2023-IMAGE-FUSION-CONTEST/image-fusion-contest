@@ -1,0 +1,21 @@
+services:
+  image-fusion-app:
+    image: tomatom4to/image-fusion
+    container_name: image-fusion-app
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    expose:
+      - "3000"
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - image-fusion-app
+    restart: always

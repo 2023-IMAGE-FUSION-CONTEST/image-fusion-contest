@@ -1,10 +1,10 @@
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/openAiStream";
 
-if (!process.env.OPENAI_API_KEY) {
-    throw new Error("Missing env var from OpenAI");
-}
-
 export async function POST(req: Request): Promise<Response> {
+    if (!process.env.OPENAI_API_KEY) {
+        throw new Error("Missing env var from OpenAI");
+    }
+
     const { prompt } = await req.json();
 
     if (!prompt) {

@@ -1,6 +1,7 @@
 import ArtworkGrid from "@/app/components/ArtworkGrid";
 import Pagination from "@/app/components/Pagination";
 import { getArtworkCount, getArtworks } from "@/utils/getArtworks";
+import { Suspense } from "react";
 
 export const generateStaticParams = async () => {
     const count = await getArtworkCount("서양화");
@@ -11,15 +12,18 @@ export const generateStaticParams = async () => {
     });
 }
 
-const Page = async ({ params }: { params: { slug: string } }) => {
-    const page = (params.slug && (!isNaN(Number(params.slug)) && Number(params.slug) > 0)) ? Number(params.slug) : 1;
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+    const { slug } = await params;
+    const page = (slug && (!isNaN(Number(slug)) && Number(slug) > 0)) ? Number(slug) : 1;
     const data = await getArtworks(page, "서양화");
     const count = await getArtworkCount("서양화");
 
     return (
         <div className={`px-10 py-8`}>
-            {/* @ts-ignore */}
-            <ArtworkGrid data={data} />
+            <Suspense fallback={<div>Loading...</div>}>
+                {/* @ts-ignore */}
+                <ArtworkGrid data={data} />
+            </Suspense>
             <Pagination type={"western"} count={count} />
         </div>
     );
